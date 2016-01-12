@@ -1,6 +1,7 @@
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
+var config = require('./');
 
 module.exports = function(env){
     var webpackConfig = {
@@ -13,8 +14,8 @@ module.exports = function(env){
         resolve: {
             extensions: ['', '.js','.min.js','.vue'],
             alias: {
-                'src': path.resolve(__dirname,'../../', './src'),
-                'dist': path.resolve(__dirname,'../../', './dist')
+                'src': config.sourceDirectory,
+                'dist': config.publicDirectory
             }
         },
         module: {
@@ -50,7 +51,7 @@ module.exports = function(env){
     if(env === 'development') {
         webpackConfig.devtool = 'eval-source-map';
         webpack.debug = true;
-    };
+    }
     
     if(env === 'production'){
         webpackConfig.devtool = 'source-map';
