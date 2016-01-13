@@ -3,6 +3,6 @@ import App from './../../components/App'
 
 /* eslint-disable no-new */
 new Vue({
-  el: 'body',
+  el: '#app',
   components: { App }
 })

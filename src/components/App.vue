@@ -1,8 +1,5 @@
 <template>
-  <div id="app">
-    <img class="logo" src="../assets/logo.png">
-    <hello></hello>
-  </div>
+  <hello></hello>
 </template>
 
 <script>
@@ -16,7 +13,5 @@ export default {
 </script>
 
 <style>
-body {
-  font-family: Helvetica, sans-serif;
-}
+
 </style>
