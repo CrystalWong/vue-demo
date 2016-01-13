@@ -1,0 +1,20 @@
+{
+  "name": "one-piece-frontend",
+  "version": "1.0.0",
+  "homepage": "",
+  "authors": [
+    "<kelong.zong@dmall.com>"
+  ],
+  "description": "Gulp starter with common tasks and scenarios",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uikit": "~2.24.3"
+  }
+}

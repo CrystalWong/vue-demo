@@ -6,7 +6,7 @@ gulp.task('clean', function (cb) {
         './dist/assets',
         './dist'
     ]);
-    //TODO 为什么 cb 放在 del 内部作为回调函数不行, m 版里面可以
+    //del 版本变化 cb 不能放在 del 内部来结束 task, 必须单独调用
     cb();
 });
 
