@@ -54,6 +54,7 @@
     "morgan": "^1.6.1",
     "open": "0.0.5",
     "phantomjs": "^1.9.19",
+    "proxy-middleware": "^0.15.0",
     "require-dir": "^0.3.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
