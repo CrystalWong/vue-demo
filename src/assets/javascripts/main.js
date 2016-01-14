@@ -23,10 +23,9 @@ new Vue({
     method: 'GET'
   },
   ready: function() {
-    this.$http
-        .get()
+    this.$http.get()
         .then(function(response) {
-          console.log(response.data)
+          this.$set('storeData',response.data)
         })
   }
 })

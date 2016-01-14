@@ -1,9 +1,13 @@
 <template>
-    <div>i am heaer</div>
+    <header>
+        <span>{{hTitle}}</span>
+    </header>
 </template>
 <style>
 
 </style>
 <script>
-
+export default {
+    props:['hTitle']
+}
 </script>
