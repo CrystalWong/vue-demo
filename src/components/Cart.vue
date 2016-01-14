@@ -1,5 +1,5 @@
 <template>
-    <div>i am banner</div>
+    <div>i am cart</div>
 </template>
 <style>
 
