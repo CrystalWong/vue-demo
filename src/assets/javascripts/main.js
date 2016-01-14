@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
-import TopHeader from './../../components/Header.vue'
+import TopHeader from './../../components/TopHeader.vue'
 import Banner from './../../components/Banner.vue'
 import Promotion from './../../components/Promotion.vue'
 import Floor1 from './../../components/Floor_type_1.vue'
