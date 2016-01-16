@@ -9,11 +9,9 @@
   </head>
   <body>
 
-    <div id="app" class="uk-width-1-1 uk-height-viewport">
-      <top-header h-title="大山子酒店"></top-header>
-      <banner></banner>
-      <promotion></promotion>
-      <floor1></floor1>
+    <div id="app" class="uk-grid uk-height-viewport">
+      <top-header :h-title="storeData.name"></top-header>
+      <floor1 :wares="storeData.wares"></floor1>
       <cart></cart>
     </div>
 
