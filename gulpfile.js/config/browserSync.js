@@ -4,7 +4,7 @@ var path = require('path');
 var config = require('./');
 
 //测试环境
-var proxyOptions = url.parse('http://10.12.8.177:3000/stores/show');
+var proxyOptions = url.parse('http://one.test.dmall.com');
 proxyOptions.route = '/stores/show';
 
 module.exports = {

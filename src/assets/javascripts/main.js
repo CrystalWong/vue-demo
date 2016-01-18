@@ -19,12 +19,13 @@ new Vue({
     Cart
   },
   http: {
-    url: '/stores/show/1bedb9a8-b868-11e5-aefc-acbc3297b89f',
+    url: 'http://localhost:3000/stores/show/1bedb9a8-b868-11e5-aefc-acbc3297b89f',
     method: 'GET'
   },
   ready: function() {
     this.$http.get()
         .then(function(response) {
+          console.log(response);
           this.$set('storeData',response.data)
         })
   }
