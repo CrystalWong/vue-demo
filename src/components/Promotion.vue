@@ -1,7 +1,7 @@
 <template>
     <div>i am topheader</div>
 </template>
-<style>
+<style lang='less'>
 
 </style>
 <script>
