@@ -1,4 +1,6 @@
 import Vue from 'vue'
+// import url from 'url'
+import envConfig from './config.js'
 import VueResource from 'vue-resource'
 import TopHeader from './../../components/TopHeader.vue'
 import Banner from './../../components/Banner.vue'
@@ -9,6 +11,11 @@ import Cart from './../../components/Cart.vue'
 /* eslint-disable */
 Vue.use(VueResource)
 
+let proxy_url = envConfig.test.serverAddress
+
+let uuid = url.uuid
+
+let request_url =  proxy_url + uuid
 new Vue({
   el: '#app',
   components: {
@@ -19,14 +26,16 @@ new Vue({
     Cart
   },
   http: {
-    url: 'http://localhost:3000/stores/show/1bedb9a8-b868-11e5-aefc-acbc3297b89f',
+    url: request_url,
     method: 'GET'
   },
   ready: function() {
-    this.$http.get()
+    this.$http.get({id: '1bedb9a8-b868-11e5-aefc-acbc3297b89f'})
         .then(function(response) {
-          console.log(response);
-          this.$set('storeData',response.data)
-        })
+          this.$set('storeData', response.data)
+        }, function(response){
+          this.$set('storeData', '系统异常')
+        }
+        )
   }
 })
