@@ -17,12 +17,11 @@
         <floor1 :wares="storeData.wares"></floor1>
         <cart></cart>
       </div>
+      <!--
       <div v-if="storeData.result==0">
         Not sorry   并没有找到相关店铺
-      </div>
-      <div v-else>
-         数据正在加载请耐心等候
-      </div>
+      </div> -->
+      <loading v-else></loading>
     </div>
 
     <script src="/assets/vendor/url/url.js"></script>

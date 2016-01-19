@@ -7,12 +7,13 @@ import Banner from './../../components/Banner.vue'
 import Promotion from './../../components/Promotion.vue'
 import Floor1 from './../../components/Floor_type_1.vue'
 import Cart from './../../components/Cart.vue'
+import Loading from './../../components/Loading.vue'
 
 /* eslint-disable */
 Vue.use(VueResource)
 
 let proxy_url = redirectServer.storesApi
-console.log("proxy_url: " + proxy_url)
+// console.log("proxy_url: " + proxy_url)
 let uuid = url.uuid
 
 let request_url =  proxy_url + uuid
@@ -23,7 +24,8 @@ new Vue({
     Banner,
     Promotion,
     Floor1,
-    Cart
+    Cart,
+    Loading
   },
   http: {
     url: request_url,
