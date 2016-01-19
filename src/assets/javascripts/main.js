@@ -2,7 +2,7 @@ import Vue from 'vue'
 // import url from 'url'
 import redirectServer from './config/config.js'
 import VueResource from 'vue-resource'
-import TopHeader from './../../components/TopHeader.vue'
+// import TopHeader from './../../components/TopHeader.vue'
 import Banner from './../../components/Banner.vue'
 import Promotion from './../../components/Promotion.vue'
 import Floor1 from './../../components/Floor_type_1.vue'
@@ -19,7 +19,7 @@ let request_url =  proxy_url + uuid
 new Vue({
   el: '#app',
   components: {
-    TopHeader,
+    // TopHeader,
     Banner,
     Promotion,
     Floor1,

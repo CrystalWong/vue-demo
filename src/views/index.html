@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <title>Dmall</title>
     <link rel="stylesheet" href="assets/vendor/uikit/css/uikit.min.css" />
+    <link rel="stylesheet" href="assets/style/global.css" />
     <script src="assets/vendor/jquery/dist/jquery.js"></script>
     <script src="assets/vendor/uikit/js/uikit.min.js"></script>
   </head>
   <body>
-
-    <div id="app" class="uk-grid uk-height-viewport">
+    <!-- uk-grid -->
+    <div id="app" class="uk-height-viewport">
       <div v-if="storeData.result==1">
-        <top-header :h-title="storeData.name"></top-header>
+        <!-- <top-header :h-title="storeData.name"></top-header> -->
         <banner :imageurl="storeData.store_image_url"></banner>
         <floor1 :wares="storeData.wares"></floor1>
         <cart></cart>
