@@ -1,6 +1,6 @@
 import Vue from 'vue'
 // import url from 'url'
-import envConfig from './config.js'
+import redirectServer from './config/config.js'
 import VueResource from 'vue-resource'
 import TopHeader from './../../components/TopHeader.vue'
 import Banner from './../../components/Banner.vue'
@@ -11,8 +11,8 @@ import Cart from './../../components/Cart.vue'
 /* eslint-disable */
 Vue.use(VueResource)
 
-let proxy_url = envConfig.test.serverAddress
-
+let proxy_url = redirectServer.storesApi
+console.log("proxy_url: " + proxy_url)
 let uuid = url.uuid
 
 let request_url =  proxy_url + uuid
