@@ -10,11 +10,21 @@
   <body>
 
     <div id="app" class="uk-grid uk-height-viewport">
-      <top-header :h-title="storeData.name"></top-header>
-      <floor1 :wares="storeData.wares"></floor1>
-      <cart></cart>
+      <div v-if="storeData.result==1">
+        <top-header :h-title="storeData.name"></top-header>
+        <banner :imageurl="storeData.store_image_url"></banner>
+        <floor1 :wares="storeData.wares"></floor1>
+        <cart></cart>
+      </div>
+      <div v-if="storeData.result==0">
+        Not sorry   并没有找到相关店铺
+      </div>
+      <div v-else>
+         数据正在加载请耐心等候
+      </div>
     </div>
 
+    <script src="/assets/vendor/url/url.js"></script>
     <script src="assets/javascripts/main.js"></script>
   </body>
 </html>

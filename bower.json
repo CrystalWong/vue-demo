@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "uikit": "~2.24.3"
+    "uikit": "~2.24.3",
+    "url": "*"
   }
 }
