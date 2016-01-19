@@ -9,6 +9,7 @@
     "test": "karma start build/karma.conf.js --single-run"
   },
   "dependencies": {
+    "jsface": "^2.4.9",
     "vue": "^1.0.0",
     "vue-resource": "^0.6.1"
   },
