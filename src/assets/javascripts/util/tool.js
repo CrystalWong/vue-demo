@@ -131,6 +131,14 @@ function hasCookies() {
   return navigator.cookieEnabled ? '1' : '0';
 }
 
+function getHostName(url) {
+  // scheme : // [username [: password] @] hostame [: port] [/ [path] [? query] [# fragment]]
+  var e = new RegExp('^(?:(?:https?|ftp):)/*(?:[^@]+@)?([^:/#]+)'),
+    matches = e.exec(url);
+
+  return matches ? matches[1] : url;
+}
+
 module.exports = {
   utf8_encode: utf8_encode,
   safeDecodeWrapper: safeDecodeWrapper,
@@ -144,5 +152,6 @@ module.exports = {
   apply: apply,
   setCookie: setCookie,
   getCookie: getCookie,
-  hasCookies: hasCookies
+  hasCookies: hasCookies,
+  getHostName: getHostName
 };
