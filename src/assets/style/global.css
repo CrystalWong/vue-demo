@@ -6,33 +6,33 @@ html{
 body{
 	font-size: 62.5%;
 }
-#app{
-  /*font-size: 2.5rem;*/
-}
-/*------定位--------*/
-.position-r{
-  position: relative;
-}
-.position-a{
-  position: absolute;
-}
-.position-f{
+.position-fixed{
   position: fixed;
 }
-.float-l{
-  float: left;
+.margin-top-reverse-25{
+  margin-top: -25px;
 }
-.float-r{
-  float: right;
+/*---背景颜色---*/
+.bg-white{
+  background-color: #fff;
+}
+.bg-grey{
+  background-color: #f2f2f2;
+}
+.bg-orange{
+  background-color: #e95b35;
 }
 /*------字体颜色--------*/
 .color-orange{
   color: #e96113;
 }
 .color-grey{
-  // color: #a5a5a5;
+  /*// color: #a5a5a5;*/
   color: #767676;
 }
 .color-black{
   color: #1a1a1a;
+}
+.color-white{
+  color: #fff;
 }

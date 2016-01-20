@@ -1,7 +1,7 @@
 <template>
  <div>
  <!-- style="max-width:465px" -->
-  <div class="position-a uk-width-1-2 uk-text-center top-10 address">大山子酒店</div>
+  <div class="uk-position-absolute uk-width-1-2 uk-text-center top-10 address">大山子酒店</div>
   <div>
   	<img :src="imageurl">
   </div>
