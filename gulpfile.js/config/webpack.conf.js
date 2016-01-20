@@ -37,7 +37,7 @@ module.exports = function(env){
                     test: /\.(png|jpg|gif|svg)$/,
                     loader: 'url',
                     query: {
-                        limit: 10000,
+                        limit: 1000000,
                         name: '[name].[ext]?[hash]'
                     }
                 }
@@ -47,12 +47,12 @@ module.exports = function(env){
             loaders: {}
         }
     };
-    
+
     if(env === 'development') {
         webpackConfig.devtool = 'eval-source-map';
         webpack.debug = true;
     }
-    
+
     if(env === 'production'){
         webpackConfig.devtool = 'source-map';
 
