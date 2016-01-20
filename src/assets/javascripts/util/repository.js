@@ -1,4 +1,4 @@
-let tool = require('./util/tool');
+let tool = require('./tool');
 let cookieExprireTime = 365* 24 * 60 * 60;
 let cookiePrefix = 'onepiece.';
 
