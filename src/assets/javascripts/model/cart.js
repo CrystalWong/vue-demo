@@ -13,8 +13,7 @@ var Cart = Stapes.subclass({
   getCartInfo: function (tempId) {
     console.log(dmall === dmall2)
     console.log(dmall === dmall)
-    console.log('getCartInfo')
-    dmall.get('app/aap')
+    dmall.post('store/city/list')
   }
 })
 module.exports = Cart
