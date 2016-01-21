@@ -1,6 +1,6 @@
-let windowAlias =  window,
-  encodeWrapper = windowAlias.encodeURIComponent,
-  decodeWrapper = windowAlias.decodeURIComponent;
+var windowAlias =  window;
+var  encodeWrapper = windowAlias.encodeURIComponent;
+var  decodeWrapper = windowAlias.decodeURIComponent;
 
 /*
  * UTF-8 encoding

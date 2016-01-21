@@ -6,8 +6,9 @@ let Repository = Stapes.subclass({
   constructor : function() {
   },
 
-  setCookie: function() {
-
+  setCookie: function(key, value, expireTime, path, domain) {
+    var et = (expireTime == null) ? cookieExprireTime : expireTime;
+    tool.setCookie(key, encodeURIComponent(value), et, path || '/', domain || '.dmall.com');
   },
 
   getUserTempId:function(){
@@ -21,7 +22,7 @@ let Repository = Stapes.subclass({
     if(!value) {
       return;
     }
-    tool.setCookie(cookiePrefix + 'temp_user_id', encodeURIComponent(value), cookieExprireTime, '/', tool.getHostName(window.location.href));
+    this.setCookie(cookiePrefix + 'temp_user_id', value);
   }
 });
 

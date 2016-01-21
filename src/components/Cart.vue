@@ -115,6 +115,11 @@
 
 </style>
 <script>
+import redirectServer from '../assets/javascripts/config/config.js';
+import test from '../assets/javascripts/config/test.js';
+import Cart from '../assets/javascripts/model/cart.js';
+console.log(redirectServer);
+console.log(test);
 function clickCart(){
   co
 }
