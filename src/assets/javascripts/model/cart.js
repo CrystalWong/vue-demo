@@ -10,7 +10,7 @@ var Cart = Stapes.subclass({
 
   },
   getCartInfo: function (tempId) {
-
+    console.log('getCartInfo')
   }
 })
 module.exports = Cart
