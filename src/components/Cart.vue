@@ -1,11 +1,11 @@
 <template>
-   <div class="cart-icon position-fixed"></div>
+   <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
    <!-- style="display:none;" -->
-   <div>
+   <div class="uk-animation-reverse">
      <div class="mask uk-height-1-1"></div>
 
       <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
-        <div class="cart-icon margin-top-reverse-25"></div>
+        <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
           <li class="ware-item-padding">
@@ -31,11 +31,11 @@
 
         </ul>
         <div class="uk-grid">
-          <div class="bg-grey uk-width-8-10 uk-text-right padding-right-25">
+          <div class="bg-grey uk-width-8-10 uk-text-right wrap-check">
             <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">￥11.00</p>
             <p class="uk-margin-remove color-grey">另需配送费7元</p>
           </div>
-          <a class="bg-orange color-white uk-width-2-10" href="">结算</a>
+          <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="">结算</a>
         </div>
       </div>
 
@@ -44,9 +44,17 @@
 <style>
   .cart-icon{
     background-image: url(../assets/images/cart.png);
+  }
+  .cart-icon-size{
     background-size:50px 50px;
     width: 50px;
     height: 50px;
+  }
+  .cart-list-icon-position{
+    background-size: 50px 50px;
+    height: 50px;
+    background-position-x: right;
+    background-repeat: no-repeat;
   }
   .wrap-cart-list{
 /*    top: 100%;
@@ -54,17 +62,27 @@
   }
   .cart-list{
     margin:0 auto;
+    max-height: 200px;
+    overflow-y: scroll;
   }
   .ware-count{
     display: inline-block;
     width: 20px;
     text-align: center;
   }
-  .padding-right-25{
-    padding-right: 25px;
+  .wrap-check{
+    padding:5px 25px 5px 0;
+  }
+  .btn-check{
+    line-height: 55px;
+    padding-left: 0;
   }
   .ware-item-padding{
-    padding: 5px 0;
+    padding: 8px 0;
+  }
+  .cart-list.uk-list-line>li:nth-child(n+2){
+    margin-top: 0;
+    padding: 8px 0;
   }
   .ware-del{
     background-image: url(../assets/images/delete_cart.png);
@@ -97,5 +115,7 @@
 
 </style>
 <script>
-
+function clickCart(){
+  co
+}
 </script>
