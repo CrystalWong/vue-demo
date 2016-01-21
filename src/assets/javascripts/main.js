@@ -32,7 +32,7 @@ new Vue({
     method: 'GET'
   },
   ready: function() {
-    this.$http.get({id: '1bedb9a8-b868-11e5-aefc-acbc3297b89f'})
+    this.$http.get()
         .then(function(response) {
           this.$set('storeData', response.data)
         }, function(response){
