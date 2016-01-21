@@ -4,7 +4,7 @@
    <div>
      <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-absolute uk-width-1-1 bg-white wrap-cart-list">
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
         <div class="cart-icon margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
@@ -49,8 +49,8 @@
     height: 50px;
   }
   .wrap-cart-list{
-    top: 100%;
-    margin-top: -120px;
+/*    top: 100%;
+    margin-top: -120px;*/
   }
   .cart-list{
     margin:0 auto;
