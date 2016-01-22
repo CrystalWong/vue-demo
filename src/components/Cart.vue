@@ -1,44 +1,46 @@
 <template>
-   <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
-   <!-- style="display:none;" -->
-   <div class="uk-animation-reverse">
-     <div class="mask uk-height-1-1"></div>
+  <div id="one-piece-cart">
+    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
+     <!-- style="display:none;" -->
+    <div class="uk-animation-reverse">
+      <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
-        <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
-        <!-- <img src="../assets/images/cart_empty.png"> -->
-        <ul class="cart-list uk-list uk-list-line uk-width-9-10">
-          <li class="ware-item-padding">
-            <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">中绿生态蒜苗</span>
-            <span class="uk-display-inline-block color-orange uk-text-top">￥11.00</span>
-            <div class="uk-float-right">
-              <a class="ware-del small-icon-size uk-text-middle" href=""></a>
-              <!-- uk-margin-small-left uk-margin-small-right -->
-              <span class="ware-count">00</span>
-              <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+        <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
+          <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
+          <!-- <img src="../assets/images/cart_empty.png"> -->
+          <ul class="cart-list uk-list uk-list-line uk-width-9-10">
+            <li class="ware-item-padding">
+              <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">中绿生态蒜苗</span>
+              <span class="uk-display-inline-block color-orange uk-text-top">￥11.00</span>
+              <div class="uk-float-right">
+                <a class="ware-del small-icon-size uk-text-middle" href=""></a>
+                <!-- uk-margin-small-left uk-margin-small-right -->
+                <span class="ware-count">00</span>
+                <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+              </div>
+            </li>
+
+            <li class="ware-item-padding">
+              <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">中绿生态蒜苗</span>
+              <span class="uk-display-inline-block color-orange uk-text-top">￥11.00</span>
+              <div class="uk-float-right">
+                <a class="ware-del small-icon-size uk-text-middle" href=""></a>
+                <span class="ware-count">00</span>
+                <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+              </div>
+            </li>
+
+          </ul>
+          <div class="uk-grid">
+            <div class="bg-grey uk-width-8-10 uk-text-right wrap-check">
+              <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">￥11.00 {{cartData.cartId}}</p>
+              <p class="uk-margin-remove color-grey">另需配送费7元</p>
             </div>
-          </li>
-
-          <li class="ware-item-padding">
-            <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">中绿生态蒜苗</span>
-            <span class="uk-display-inline-block color-orange uk-text-top">￥11.00</span>
-            <div class="uk-float-right">
-              <a class="ware-del small-icon-size uk-text-middle" href=""></a>
-              <span class="ware-count">00</span>
-              <a class="ware-add small-icon-size uk-text-middle" href=""></a>
-            </div>
-          </li>
-
-        </ul>
-        <div class="uk-grid">
-          <div class="bg-grey uk-width-8-10 uk-text-right wrap-check">
-            <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">￥11.00</p>
-            <p class="uk-margin-remove color-grey">另需配送费7元</p>
+            <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="">结算 </a>
           </div>
-          <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="">结算</a>
         </div>
-      </div>
 
+    </div>
   </div>
 </template>
 <style>
@@ -117,11 +119,27 @@
 <script>
 import redirectServer from '../assets/javascripts/config/config.js';
 import Cart from '../assets/javascripts/model/cart.js';
+import Vue from 'vue'
 console.log(redirectServer);
 console.log(Cart);
+
+var _cartVm = new Vue({
+  el: '#one-piece-cart',
+  data: {
+    fullName: 'Foo Bar'
+  }
+})
+// console.log(_cart_vm)
 var cart = new Cart;
 cart.getCartInfo();
-cart.on('loadcartsuccess', function() {alert('success')});
+cart.on('loadcartsuccess', function(data){
+  // export default {
+  //   cartData: data
+  // }
+  _cartVm.$set('cartData', data)
+  console.log(_cartVm);
+  console.log(_cartVm.cartData);
+});
 function clickCart(){
   co
 }

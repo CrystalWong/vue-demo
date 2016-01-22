@@ -24,7 +24,7 @@ let Repository = Stapes.subclass({
     localStorage.setItem(CONSTANT.USERTEMPID, value)
   },
 
-  deleteUserTempId: function() {
+  deleteUserTempId: function () {
     localStorage.removeItem(CONSTANT.USERTEMPID)
   }
 })

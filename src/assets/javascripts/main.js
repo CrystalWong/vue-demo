@@ -37,7 +37,6 @@ new Vue({
           this.$set('storeData', response.data)
         }, function(response){
           this.$set('storeData', '系统异常')
-        }
-        )
+        })
   }
 })

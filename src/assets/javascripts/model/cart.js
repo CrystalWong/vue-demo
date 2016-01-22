@@ -16,30 +16,31 @@ var Cart = Stapes.subclass({
   },
   getCartInfo: function () {
     console.log(dmall === dmall2)
-    console.log(dmall === dmall)
+    // console.log(dmall === dmall)
     let tempId = repository.getUserTempId()
     let lat = tool.getCookie(CONSTANT.LAT)
     let lng = tool.getCookie(CONSTANT.LNG)
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
     let params = {
-      //4 test
+      // 4 test
       lat: 39.904989,
       lng: 116.405285
-      //end
-      //lat: lat,
-      //lng: lng
+      // end
+      // lat: lat,
+      // lng: lng
     }
+
+    console.log(tempId, lat, lng)
     if (!header.storeId) {
-      //4 test
+      // 4 test
       header['storeId'] = 150
       header['venderId'] = 1
-      //end
-
-      //header['storeId'] = tool.getCookie(CONSTANT.STOREID)
-      //header['venderId'] = ttool.getCookie(CONSTANT.VENDORID)
+      // end
+      // header['storeId'] = tool.getCookie(CONSTANT.STOREID)
+      // header['venderId'] = ttool.getCookie(CONSTANT.VENDORID)
     }
-    if(!header.token && !tool.isEmpty(token)) {
+    if (!header.token && !tool.isEmpty(token)) {
       header['token'] = token
     }
     if (!tool.isEmpty(tempId)) {
@@ -52,14 +53,17 @@ var Cart = Stapes.subclass({
         if (!tool.isEmpty(cartId) && tool.isEmpty(tool.getCookie('token'))) {
           repository.setUserTempId(cartId)
         }
-        if(!tool.isEmpty(tool.getCookie('token'))) {
+        if (!tool.isEmpty(tool.getCookie('token'))) {
           repository.deleteUserTempId()
         }
         this.emit('loadcartsuccess', rs)
       }.bind(this)
-    ).catch(function (err) {
-      this.emit('loadcartfailure')
-    }.bind(this))
+    )
+
+    // 暂时注释
+    // ).catch(function (err) {
+    //   this.emit('loadcartfailure')
+    // }.bind(this))
   }
 })
 module.exports = Cart

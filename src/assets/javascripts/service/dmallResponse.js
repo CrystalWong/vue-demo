@@ -1,7 +1,7 @@
 'use strict'
 
 let Response = function (response) {
-  if (200 === response.status && '0000' === response.data.code) {
+  if (response.status === 200 && response.data.code === '0000') {
     return response.data.data
   } else {
     throw new Error(response.data.result)
