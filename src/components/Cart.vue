@@ -1,5 +1,4 @@
 <template>
-  <div id="one-piece-cart">
     <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
      <!-- style="display:none;" -->
     <div class="uk-animation-reverse">
@@ -41,7 +40,6 @@
         </div>
 
     </div>
-  </div>
 </template>
 <style>
   .cart-icon{
@@ -119,28 +117,28 @@
 <script>
 import redirectServer from '../assets/javascripts/config/config.js';
 import Cart from '../assets/javascripts/model/cart.js';
-import Vue from 'vue'
 console.log(redirectServer);
 console.log(Cart);
 
-var _cartVm = new Vue({
-  el: '#one-piece-cart',
-  data: {
-    fullName: 'Foo Bar'
+// let cartData;
+
+// var cart = new Cart
+// cart.getCartInfo()
+// cart.on('loadcartsuccess', function(data){
+//   cartData = data
+
+// })
+export default {
+  data(){
+      open: true
+  },
+  ready :function(){
+    let _this = this;
+    let cart = new Cart();
+    cart.getCartInfo();
+    cart.on('loadcartsuccess',function(data){
+      _this.$set("cartData",data);
+    });
   }
-})
-// console.log(_cart_vm)
-var cart = new Cart;
-cart.getCartInfo();
-cart.on('loadcartsuccess', function(data){
-  // export default {
-  //   cartData: data
-  // }
-  _cartVm.$set('cartData', data)
-  console.log(_cartVm);
-  console.log(_cartVm.cartData);
-});
-function clickCart(){
-  co
 }
 </script>
