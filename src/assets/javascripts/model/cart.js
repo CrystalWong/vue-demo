@@ -48,6 +48,9 @@ var Cart = Stapes.subclass({
     if (!tool.isEmpty(tempId)) {
       params['tempId'] = tempId
     }
+    //4 test
+    params['userId'] = 33
+    //end
     dmall.post('cart/addToCart', params).then(respose).then(
       function (rs) {
         if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
