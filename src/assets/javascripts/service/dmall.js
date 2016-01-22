@@ -13,14 +13,14 @@ var Dmall = Stapes.subclass({
     this.vueresource.use(require('vue-resource'))
     tool.apply(this.vueresource.http.headers.common, header)
   },
-  get: function (url) {
-    return this.vueresource.http.get(root + url)
+  get: function (url, data, opt) {
+    return this.vueresource.http.get(root + url, data)
   },
-  post: function (url) {
-    return this.vueresource.http.post(root + url)
+  post: function (url, data, opt) {
+    return this.vueresource.http.post(root + url, data)
   },
-  jsonp: function (url) {
-    return this.vueresource.http.jsonp(root + url)
+  jsonp: function (url, data, opt) {
+    return this.vueresource.http.jsonp(root + url, data)
   },
   getHeader: function () {
     return this.vueresource.http.headers.common

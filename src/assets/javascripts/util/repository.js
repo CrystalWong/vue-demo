@@ -1,29 +1,28 @@
-let tool = require('./tool');
-let cookieExprireTime = 365* 24 * 60 * 60;
-let cookiePrefix = 'onepiece.';
+let tool = require('./tool')
+let cookieExprireTime = 365 * 24 * 60 * 60
+let CONSTANT = require('./constant.js')
+let Stapes = require('stapes')
 
 let Repository = Stapes.subclass({
-  constructor : function() {
+  constructor: function () {
   },
 
-  setCookie: function(key, value, expireTime, path, domain) {
-    var et = (expireTime == null) ? cookieExprireTime : expireTime;
-    tool.setCookie(key, encodeURIComponent(value), et, path || '/', domain || '.dmall.com');
+  setCookie: function (key, value, expireTime, path, domain) {
+    var et = (expireTime == null) ? cookieExprireTime : expireTime
+    tool.setCookie(key, encodeURIComponent(value), et, path || '/', domain || CONSTANT.COOKIEDOMAIN)
   },
 
-  getUserTempId:function(){
-    "use strict";
-    var str = tool.getCookie('globalTempUserId') || tool.getCookie(cookiePrefix + 'temp_user_id');
-    return(str.length > 0 ? decodeURIComponent(str): null);
+  getUserTempId: function () {
+    var str = tool.getCookie('globalTempUserId') || tool.getCookie(CONSTANT.USERTEMPID)
+    return ((str && str.length) > 0 ? decodeURIComponent(str) : null)
   },
 
-  setUserTempId:function(value){
-    "use strict";
-    if(!value) {
-      return;
+  setUserTempId: function (value) {
+    if (!value) {
+      return
     }
-    this.setCookie(cookiePrefix + 'temp_user_id', value);
+    this.setCookie(CONSTANT.USERTEMPID, value)
   }
-});
+})
 
-module.exports = new Repository();
+module.exports = new Repository()
