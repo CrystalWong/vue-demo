@@ -14,56 +14,100 @@ var Cart = Stapes.subclass({
   initcart: function () {
 
   },
+  /*
+   add2Cart: function() {
+   console.log('jsonP add2Cart')
+   jsonP.jsonp('mcart/add.jsonp', {skuId: 191289, erpStoreId: 230}).then(respose).then(
+   function (rs) {
+   this.emit('addsuccess', rs)
+   }.bind(this)
+   ).catch(function (err) {
+   this.emit('addfailure')
+   }.bind(this))
+   },
+   */
+  add2Cart: function(sku, count, storeId, venderId) {
+    console.log('add2Cart')
+    let tempId = repository.getUserTempId()
+    let header = dmall.getHeader()
+    let token = tool.getCookie('token')
+    let erpStoreId = storeId || tool.getCookie(store_id)
+    let vendorId = venderId || tool.getCookie('vendorId') || tool.getCookie('vender_id')
+    let params = {
+      storeGroup: [{"erpStoreId": erpStoreId, "wares": [{"sku": sku, "count": count || 1, "checked": true}]}]
+    }
+    if(!tool.isEmpty(storeId)) {
+      header['storeId'] = storeId
+    }
+    if(!tool.isEmpty(vendorId)) {
+      header['venderId'] = venderId
+    }
+    if(!tool.isEmpty(token)) {
+      header['token'] = token
+    }
+    if (!tool.isEmpty(tempId)) {
+      params['tempId'] = tempId
+    }
+    //4 test
+    params['userId'] = 33
+    //end
+    dmall.post('cart/addToCart', params).then(respose).then(
+      function (rs) {
+        if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
+          repository.setUserTempId(rs.cartId)
+        }
+        this.emit('addsuccess', rs)
+      }.bind(this)
+    ).catch(function (err) {
+      this.emit('addfailure')
+    }.bind(this))
+  },
   getCartInfo: function () {
     console.log(dmall === dmall2)
-    // console.log(dmall === dmall)
+    console.log(dmall === dmall)
     let tempId = repository.getUserTempId()
     let lat = tool.getCookie(CONSTANT.LAT)
     let lng = tool.getCookie(CONSTANT.LNG)
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
     let params = {
-      // 4 test
+      //4 test
       lat: 39.904989,
       lng: 116.405285
-      // end
-      // lat: lat,
-      // lng: lng
+      //end
+      //lat: lat,
+      //lng: lng
     }
-
-    console.log(tempId, lat, lng)
     if (!header.storeId) {
-      // 4 test
+      //4 test
       header['storeId'] = 150
       header['venderId'] = 1
-      // end
-      // header['storeId'] = tool.getCookie(CONSTANT.STOREID)
-      // header['venderId'] = ttool.getCookie(CONSTANT.VENDORID)
+      //end
+
+      //header['storeId'] = tool.getCookie(CONSTANT.STOREID)
+      //header['venderId'] = ttool.getCookie(CONSTANT.VENDORID)
     }
-    if (!header.token && !tool.isEmpty(token)) {
+    if(!header.token && !tool.isEmpty(token)) {
       header['token'] = token
     }
     if (!tool.isEmpty(tempId)) {
       params['tempId'] = tempId
     }
-    dmall.post('cart/cartInfo', {lat: 39.904989, lng: 116.405285}).then(respose).then(
+    dmall.post('cart/cartInfo', params).then(respose).then(
       function (rs) {
         console.log(rs)
         let cartId = rs.cartId
         if (!tool.isEmpty(cartId) && tool.isEmpty(tool.getCookie('token'))) {
           repository.setUserTempId(cartId)
         }
-        if (!tool.isEmpty(tool.getCookie('token'))) {
+        if(!tool.isEmpty(tool.getCookie('token'))) {
           repository.deleteUserTempId()
         }
         this.emit('loadcartsuccess', rs)
       }.bind(this)
-    )
-
-    // 暂时注释
-    // ).catch(function (err) {
-    //   this.emit('loadcartfailure')
-    // }.bind(this))
+    ).catch(function (err) {
+      this.emit('loadcartfailure')
+    }.bind(this))
   }
 })
 module.exports = Cart
