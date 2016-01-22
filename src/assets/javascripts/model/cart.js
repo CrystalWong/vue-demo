@@ -14,7 +14,13 @@ var Cart = Stapes.subclass({
   getCartInfo: function (tempId) {
     console.log(dmall === dmall2)
     console.log(dmall === dmall)
-    dmall.post('store/city/list').then(respose)
+    dmall.post('store/city/list').then(respose).then(
+      function(rs) {
+        this.emit("loadcartsuccess", rs)
+      }.bind(this)
+    ).catch(function (err) {
+      this.emit("loadcartfailure")
+    }.bind(this))
   }
 })
 module.exports = Cart

@@ -121,6 +121,7 @@ console.log(redirectServer);
 console.log(Cart);
 var cart = new Cart;
 cart.getCartInfo();
+cart.on('loadcartsuccess', function() {alert('success')});
 function clickCart(){
   co
 }
