@@ -6,7 +6,6 @@ var tool = require('../util/tool.js')
 var dmall = new Dmall()
 var dmall2 = new Dmall()
 var respose = require('../service/dmallResponse.js')
-/* eslint-disable */
 
 
 var Cart = Stapes.subclass({

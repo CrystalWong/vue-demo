@@ -26,7 +26,8 @@ module.exports = function(env){
                 },
                 {
                     test: /\.js$/,
-                    loader: 'babel!eslint',
+                    // loader: 'babel!eslint',
+                    loader: 'babel',
                     exclude: /node_modules/
                 },
                 {
