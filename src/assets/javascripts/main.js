@@ -50,6 +50,7 @@ let appVm = new Vue({
       this.cartShow = false
     }
 
+
   }
 })
 
