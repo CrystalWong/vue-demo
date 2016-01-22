@@ -1,15 +1,8 @@
 <template>
-<<<<<<< HEAD
     <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
      <!-- style="display:none;" -->
     <div class="uk-animation-reverse">
       <div class="mask uk-height-1-1"></div>
-=======
-   <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
-   <!-- style="display:none;" -->
-   <div class="uk-animation-reverse">
-     <div class="mask uk-height-1-1"></div>
->>>>>>> 7454d1d9dfc2f8a423530332e8c75fdabb0fa73a
 
       <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
         <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
@@ -45,12 +38,7 @@
           <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="">结算</a>
         </div>
       </div>
-
-<<<<<<< HEAD
     </div>
-=======
-  </div>
->>>>>>> 7454d1d9dfc2f8a423530332e8c75fdabb0fa73a
 </template>
 <style>
   .cart-icon{
@@ -126,11 +114,10 @@
 
 </style>
 <script>
-import redirectServer from '../assets/javascripts/config/config.js';
-import Cart from '../assets/javascripts/model/cart.js';
-<<<<<<< HEAD
-console.log(redirectServer);
-console.log(Cart);
+import redirectServer from '../assets/javascripts/config/config.js'
+import Cart from '../assets/javascripts/model/cart.js'
+console.log(redirectServer)
+console.log(Cart)
 
 // let cartData;
 
@@ -141,25 +128,14 @@ console.log(Cart);
 
 // })
 export default {
-  data(){
-      open: true
-  },
   ready :function(){
     let _this = this;
-    let cart = new Cart();
+    let cart = new Cart()
     cart.getCartInfo();
     cart.on('loadcartsuccess',function(data){
-      _this.$set("cartData",data);
-    });
+      _this.$set('cartData', data)
+    })
   }
-=======
-console.log(Cart);
-var cart = new Cart;
-cart.getCartInfo();
-cart.add2Cart();
-cart.on('loadcartsuccess', function() {console.log(success)});
-function clickCart(){
-  co
->>>>>>> 7454d1d9dfc2f8a423530332e8c75fdabb0fa73a
 }
 </script>
+
