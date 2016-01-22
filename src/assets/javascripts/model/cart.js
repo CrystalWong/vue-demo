@@ -50,9 +50,6 @@ var Cart = Stapes.subclass({
     if (!tool.isEmpty(tempId)) {
       params['tempId'] = tempId
     }
-    //4 test
-    params['userId'] = 33
-    //end
     dmall.post('cart/addToCart', params).then(respose).then(
       function (rs) {
         if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
@@ -62,6 +59,42 @@ var Cart = Stapes.subclass({
       }.bind(this)
     ).catch(function (err) {
       this.emit('addfailure')
+    }.bind(this))
+  },
+  updateCartItem: function(sku, count, storeId, venderId) {
+    if(!count) {
+      return
+    }
+    console.log('updateCartItem')
+    let tempId = repository.getUserTempId()
+    let header = dmall.getHeader()
+    let token = tool.getCookie('token')
+    let erpStoreId = storeId || tool.getCookie(store_id)
+    let vendorId = venderId || tool.getCookie('vendorId') || tool.getCookie('vender_id')
+    let params = {
+      storeGroup: [{"erpStoreId": erpStoreId, "wares": [{"sku": sku, "count": count || 1, "checked": true}]}]
+    }
+    if(!tool.isEmpty(storeId)) {
+      header['storeId'] = storeId
+    }
+    if(!tool.isEmpty(vendorId)) {
+      header['venderId'] = venderId
+    }
+    if(!tool.isEmpty(token)) {
+      header['token'] = token
+    }
+    if (!tool.isEmpty(tempId)) {
+      params['tempId'] = tempId
+    }
+    dmall.post('cart/updateCartItem', params).then(respose).then(
+      function (rs) {
+        if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
+          repository.setUserTempId(rs.cartId)
+        }
+        this.emit('updatesuccess', rs)
+      }.bind(this)
+    ).catch(function (err) {
+      this.emit('updatefailure')
     }.bind(this))
   },
   getCartInfo: function () {
