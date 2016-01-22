@@ -43,9 +43,13 @@ let appVm = new Vue({
         })
   },
   events: {
-    'changeCartDisplay': function (msg) {
+    'displayCart': function () {
       this.cartShow = true
+    },
+    hideCart: function() {
+      this.cartShow = false
     }
+
   }
 })
 

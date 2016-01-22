@@ -1,12 +1,11 @@
 <template>
-  <div id="one-piece_cart" v-show="cart_display">
-    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
+  <!-- <div id="one-piece_cart" > -->
      <!-- style="display:none;" -->
-    <div class="uk-animation-reverse">
+    <div class="uk-animation-reverse" v-show="cart_display">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
-        <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" @click="hideCart">
+        <div class="cart-icon cart-list-icon-position margin-top-reverse-25" data-value="cart_display"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
           <li class="ware-item-padding">
@@ -36,11 +35,12 @@
             <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">￥11.00</p>
             <p class="uk-margin-remove color-grey">另需配送费7元</p>
           </div>
-          <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="">结算</a>
+          <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="" >结算</a>
         </div>
       </div>
     </div>
-  </div>>
+    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" data-value="cart_display" v-else="cart_display" @click="showCart"></div>
+  <!-- </div> -->
 </template>
 <style>
   .cart-icon{
@@ -138,6 +138,15 @@ export default {
     cart.on('loadcartsuccess',function(data){
       _this.$set('cartData', data)
     })
+  },
+  methods: {
+    showCart: function () {
+      this.$dispatch('displayCart')
+    },
+    hideCart: function (){
+      this.$dispatch('hideCart')
+      // this.$dispatch('changeCartDisplay')
+    }
   }
 }
 </script>

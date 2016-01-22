@@ -5,7 +5,7 @@
         <p class="ware-title">{{ware.wareName }}</p>
         <p class="color-orange ware-price">￥{{ware.warePrice}}</p>
       </div>
-       <div class="uk-float-right"><a class="add-icon color-orange" @click="showCart"></a></div>
+       <div class="uk-float-right"><a class="add-icon color-orange"></a></div>
   </div>
 </template>
 
@@ -46,12 +46,6 @@
 
 <script>
     export default {
-        props: ['wares'],
-        methods: {
-          showCart: function (args) {
-            console.log("addddddd")
-            this.$dispatch('changeCartDisplay')
-          }
-        }
+        props: ['wares']
     }
 </script>
