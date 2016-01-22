@@ -1,4 +1,5 @@
 <template>
+  <div id="one-piece_cart" v-show="cart_display">
     <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-on:click="clickCart"></div>
      <!-- style="display:none;" -->
     <div class="uk-animation-reverse">
@@ -39,6 +40,7 @@
         </div>
       </div>
     </div>
+  </div>>
 </template>
 <style>
   .cart-icon{
@@ -128,6 +130,7 @@ console.log(Cart)
 
 // })
 export default {
+  props:['cart_display'],
   ready :function(){
     let _this = this;
     let cart = new Cart()

@@ -17,7 +17,10 @@ let proxy_url = redirectServer.storesApi
 let uuid = url.uuid
 
 let request_url =  proxy_url + uuid
-new Vue({
+let appVm = new Vue({
+  data:{
+    cartShow: false
+  },
   el: '#app',
   components: {
     // TopHeader,
@@ -38,5 +41,11 @@ new Vue({
         }, function(response){
           this.$set('storeData', '系统异常')
         })
+  },
+  events: {
+    'changeCartDisplay': function (msg) {
+      this.cartShow = true
+    }
   }
 })
+
