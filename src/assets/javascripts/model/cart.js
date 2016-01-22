@@ -21,6 +21,15 @@ var Cart = Stapes.subclass({
     let lat = tool.getCookie(CONSTANT.LAT)
     let lng = tool.getCookie(CONSTANT.LNG)
     let header = dmall.getHeader()
+    let token = tool.getCookie('token')
+    let params = {
+      //4 test
+      lat: 39.904989,
+      lng: 116.405285
+      //end
+      //lat: lat,
+      //lng: lng
+    }
     if (!header.storeId) {
       //4 test
       header['storeId'] = 150
@@ -30,12 +39,21 @@ var Cart = Stapes.subclass({
       //header['storeId'] = tool.getCookie(CONSTANT.STOREID)
       //header['venderId'] = ttool.getCookie(CONSTANT.VENDORID)
     }
+    if(!header.token && !tool.isEmpty(token)) {
+      header['token'] = token
+    }
+    if (!tool.isEmpty(tempId)) {
+      params['tempId'] = tempId
+    }
     dmall.post('cart/cartInfo', {lat: 39.904989, lng: 116.405285}).then(respose).then(
       function (rs) {
         console.log(rs)
         let cartId = rs.cartId
-        if (!tool.isEmpty(cartId)) {
+        if (!tool.isEmpty(cartId) && tool.isEmpty(tool.getCookie('token'))) {
           repository.setUserTempId(cartId)
+        }
+        if(!tool.isEmpty(tool.getCookie('token'))) {
+          repository.deleteUserTempId()
         }
         this.emit('loadcartsuccess', rs)
       }.bind(this)

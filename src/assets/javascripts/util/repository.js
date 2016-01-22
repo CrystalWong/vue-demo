@@ -21,7 +21,11 @@ let Repository = Stapes.subclass({
     if (!value) {
       return
     }
-    this.setCookie(CONSTANT.USERTEMPID, value)
+    localStorage.setItem(CONSTANT.USERTEMPID, value)
+  },
+
+  deleteUserTempId: function() {
+    localStorage.removeItem(CONSTANT.USERTEMPID)
   }
 })
 
