@@ -127,16 +127,35 @@ console.log(Cart)
 // cart.getCartInfo()
 // cart.on('loadcartsuccess', function(data){
 //   cartData = data
-
 // })
+ class Polygon {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+ }
+ let poly = new Polygon(2,3)
+ console.log(poly.height);
 export default {
-  props:['cart_display'],
+  el: '#one-piece_cart',
+  data() {
+    return {
+      cart_display: true,
+      cartData: {
+
+      }
+    }
+  },
   ready :function(){
     let _this = this;
     let cart = new Cart()
     cart.getCartInfo();
+    console.log(_this);
     cart.on('loadcartsuccess',function(data){
-      _this.$set('cartData', data)
+      console.log(data);
+      _this.$set('cartData', data);
+      console.log(_this.cartData);
+      console.log(_this.cart_display);
     })
   }
 }
