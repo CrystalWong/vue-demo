@@ -5,7 +5,7 @@
     <div class="uk-animation-reverse">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" v-on:click="clickCart">
         <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
@@ -144,6 +144,11 @@ export default {
       cartData: {
 
       }
+    }
+  },
+  methods: {
+    clickCart: function () {
+      console.log('clickCart');
     }
   },
   ready :function(){
