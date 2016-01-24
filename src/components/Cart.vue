@@ -15,11 +15,11 @@
                 <span class="uk-display-inline-block color-orange uk-text-top">{{ ware.promotionPrice/100 | currency '￥'}}</span>
                 <div class="uk-float-right">
                   <a class="ware-del small-icon-size uk-text-middle" href=""></a>
+                  <a class="ware-reduce small-icon-size uk-text-middle" href=""></a>
                   <span class="ware-count">{{ ware.count }}</span>
                   <a class="ware-add small-icon-size uk-text-middle" href=""></a>
                 </div>
               </li>
-
             </ul>
             <div class="uk-grid">
               <div class="bg-grey uk-width-8-10 uk-text-right wrap-check">
