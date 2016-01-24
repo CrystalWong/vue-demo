@@ -63,6 +63,14 @@ export default {
 
       cart.on('addsuccess',function(data){
         console.log('addsuccess')
+        console.log(UIkit)
+        UIkit.notify({
+            message: '感谢您购买',
+            status: 'success',
+            timeout: 2000,
+            pos: 'bottom-center'
+        });
+
         console.log(data);
         // _this.$set('cartData', data);
       })

@@ -17,5 +17,15 @@
   "dependencies": {
     "uikit": "~2.24.3",
     "url": "*"
+  },
+  "overrides": {
+    "uikit": {
+        "main": [
+          "css/components/notify.min.css",
+          "js/components/notify.min.js",
+          "js/uikit.min.js"
+      ]
+
+    }
   }
 }
