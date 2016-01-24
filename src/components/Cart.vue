@@ -1,10 +1,8 @@
 <template>
-  <!-- <div id="one-piece_cart" > -->
-     <!-- style="display:none;" -->
-    <div class="uk-animation-reverse" v-if="cart_display">
+    <div v-bind:class="{ 'cart-show': cartShow, 'cart-hide': cartHide}" v-if="cart_display" style="position: fixed;width: 100%;height: 100%;top: 0;">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" v-on:click="hideCart">
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list cart-effect" v-on:click="hideCart">
         <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
@@ -60,9 +58,10 @@
   .wrap-cart-list{
 /*    top: 100%;
     margin-top: -120px;*/
+    transform:translateY(100%);
   }
   .cart-list{
-    margin:0 auto;
+    margin:0 auto;;
     max-height: 200px;
     overflow-y: scroll;
   }
@@ -107,12 +106,21 @@
     /*height: 100%;*/
     top: 0;
   }
-/*  .upShow{
-
+  .cart-show .cart-effect{
+    animation: upShow linear .5s both;
+    -webkit-animation: upShow linear .5s both;
   }
+  .cart-hide .cart-effect{
+   animation: downHide linear .5s both;
+   -webkit-animation: downHide linear .5s both;
+  }
+
   @keyframes upShow{
     0%{opacity:0;-webkit-transform:translateY(100%)}100%{opacity:1;-webkit-transform:translateY(0)}
-  }*/
+  }
+  @keyframes downHide{
+    0%{opacity:1;-webkit-transform:translateY(0)}100%{opacity:0;-webkit-transform:translateY(100%)}
+  }
 
 </style>
 <script>
@@ -164,12 +172,20 @@ export default {
   },
   methods: {
     showCart: function () {
-      this.$set('cart_display', true)
+      this.$set('cart_display', true);
+      this.$set('cartShow', true);
+      this.$set('cartHide', false);
       // this.$dispatch('displayCart')
+      $("body").css("overflow","hidden");
     },
     hideCart: function (){
-      this.$set('cart_display', false)
+      setTimeout(function(){
+        this.$set('cart_display', false);
+      }.bind(this),500);
+      this.$set('cartHide', true);
+      this.$set('cartShow', false);
       // this.$dispatch('hideCart')
+      $("body").css("overflow","visible");
     }
   }
 }
