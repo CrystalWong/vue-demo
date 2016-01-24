@@ -9,8 +9,8 @@
     <script src="assets/vendor/jquery/dist/jquery.js"></script>
     <script src="assets/vendor/uikit/js/uikit.min.js"></script>
   </head>
-  <body>
-    <div id="app" class="uk-height-viewport">
+  <body id='app' v-bind:class="{'bd-overflow-visible': overflowVisible, 'bd-overflow-hidden': overflowHiden }">
+    <div id="app-back" class="uk-height-viewport">
       <div v-show="storeData.result==1">
         <!-- <top-header :h-title="storeData.name"></top-header> -->
         <banner :imageurl="storeData.store_image_url"></banner>

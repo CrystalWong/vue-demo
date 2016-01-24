@@ -166,11 +166,11 @@ export default {
   methods: {
     showCart: function () {
       this.$set('cart_display', true)
-      // this.$dispatch('displayCart')
+      this.$dispatch('hideOverflow')
     },
     hideCart: function (){
       this.$set('cart_display', false)
-      // this.$dispatch('hideCart')
+      this.$dispatch('showOverflow')
     }
   }
 }
