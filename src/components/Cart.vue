@@ -142,7 +142,6 @@ export default {
     return {
       cart_display: true,
       cartData: {
-
       }
     }
   },

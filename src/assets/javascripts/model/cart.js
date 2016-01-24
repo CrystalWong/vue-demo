@@ -96,7 +96,7 @@ var Cart = Stapes.subclass({
       this.emit('updatefailure')
     }.bind(this))
   },
-  getCartInfo: function () {
+  getCartInfo: function (storeId, vendorId) {
     console.log(dmall === dmall2)
     console.log(dmall === dmall)
     let tempId = repository.getUserTempId()
@@ -114,12 +114,12 @@ var Cart = Stapes.subclass({
     }
     if (!header.storeId) {
       //4 test
-      header['storeId'] = 150
+      header['storeId'] = 230
       header['venderId'] = 1
       //end
 
-      //header['storeId'] = tool.getCookie(CONSTANT.STOREID)
-      //header['venderId'] = ttool.getCookie(CONSTANT.VENDORID)
+      //header['storeId'] = storeId || tool.getCookie(CONSTANT.STOREID)
+      //header['venderId'] = vendorId || tool.getCookie(CONSTANT.VENDORID)
     }
     if(!header.token && !tool.isEmpty(token)) {
       header['token'] = token
@@ -137,11 +137,24 @@ var Cart = Stapes.subclass({
         if(!tool.isEmpty(tool.getCookie('token'))) {
           repository.deleteUserTempId()
         }
-        this.emit('loadcartsuccess', rs)
+        this.emit('loadcartsuccess', this.extractCurrentCart(rs))
       }.bind(this)
     ).catch(function (err) {
       this.emit('loadcartfailure')
     }.bind(this))
+  },
+  extractCurrentCart: function(rs, storeId) {
+    let currentCart = tool.clone(rs)
+    let storeId = storeId || tool.getCookie(CONSTANT.STOREID)
+    let o = Stapes.subclass()
+    o.push(rs.storeGroup || [])
+    currentCart.storeGroup = []
+    o.each(function(cart) {
+      if(String(storeId) === String(cart.erpStoreId)) {
+        currentCart.storeGroup.push(cart)
+      }
+    })
+    return currentCart
   }
 })
 module.exports = Cart
