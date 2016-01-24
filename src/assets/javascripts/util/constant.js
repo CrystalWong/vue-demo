@@ -6,6 +6,8 @@ let constant = {
   LNG: prefix + 'lng',
   STOREID: prefix + 'storeId',
   VENDORID: prefix + 'vendorId',
+  AREADID: prefix + 'areadId',
+  COMMUNITYNAME: prefix + 'communityName',
   USERTEMPID: prefix + 'userTempId'
 }
 

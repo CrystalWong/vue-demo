@@ -34,6 +34,7 @@ let appVm = new Vue({
   },
 
   data: {
+      storeData:{},
       overflowVisible: true,
       overflowHiden: false
   },
@@ -44,10 +45,12 @@ let appVm = new Vue({
   ready: function() {
     this.$http.get()
       .then(function(response) {
-        localStorage.setItem(CONSTANT.VENDORID, response.data.verdor_id)
+        localStorage.setItem(CONSTANT.VENDORID, response.data.vendor_id)
         localStorage.setItem(CONSTANT.STOREID, response.data.d_store_id)
         localStorage.setItem(CONSTANT.LNG, response.data.lng)
         localStorage.setItem(CONSTANT.LAT, response.data.lat)
+        localStorage.setItem(CONSTANT.AREADID, response.data.zipcode)
+        localStorage.setItem(CONSTANT.COMMUNITYNAME, response.data.address)
         this.$set('storeData', response.data)
       }, function(response){
         this.$set('storeData', '系统异常')
@@ -57,6 +60,7 @@ let appVm = new Vue({
     hideOverflow: function () {
       this.$set('overflowVisible', false)
       this.$set('overflowHiden', true)
+
     },
     showOverflow: function() {
       this.$set('overflowVisible', true)
