@@ -50,6 +50,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "^1.7.0",
+    "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "less-plugin-autoprefix": "^1.5.1",
     "main-bower-files": "^2.11.1",
