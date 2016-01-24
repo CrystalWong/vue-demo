@@ -117,6 +117,7 @@
 </style>
 <script>
 // import redirectServer from '../assets/javascripts/config/config.js'
+import CONSTANT from '../assets/javascripts/util/constant.js'
 import Cart from '../assets/javascripts/model/cart.js'
 // console.log(redirectServer)
 console.log(Cart)
@@ -146,8 +147,14 @@ export default {
   },
   ready :function(){
     let _this = this;
+    let storeId = localStorage.getItem(CONSTANT.STOREID)
+    let venderId = localStorage.getItem(CONSTANT.VENDORID)
+    let lat = localStorage.getItem(CONSTANT.LAT)
+    let lng = localStorage.getItem(CONSTANT.LNG)
+
     let cart = new Cart()
-    cart.getCartInfo();
+    cart.getCartInfo(storeId, venderId, lat, lng);
+
     console.log(_this);
     cart.on('loadcartsuccess',function(data){
       console.log(data);
@@ -155,12 +162,6 @@ export default {
       console.log(_this.cartData);
       console.log('cartVue: '+_this.cart_display);
     })
-    // cart.on('addsuccess',function(data){
-    //   console.log('addsuccess');
-    //   console.log(data);
-    //   // _this.$set('cartData', data);
-    // })
-
   },
   methods: {
     showCart: function () {

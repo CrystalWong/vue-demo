@@ -13,7 +13,7 @@ let Repository = Stapes.subclass({
   },
 
   getUserTempId: function () {
-    var str = tool.getCookie('globalTempUserId') || tool.getCookie(CONSTANT.USERTEMPID)
+    var str = tool.getCookie('globalTempUserId') || localStorage.getItem(CONSTANT.USERTEMPID)
     return ((str && str.length) > 0 ? decodeURIComponent(str) : null)
   },
 

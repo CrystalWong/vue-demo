@@ -96,30 +96,33 @@ var Cart = Stapes.subclass({
       this.emit('updatefailure')
     }.bind(this))
   },
-  getCartInfo: function (storeId, vendorId) {
+  getCartInfo: function (storeId, vendorId, alat, alng) {
     console.log(dmall === dmall2)
     console.log(dmall === dmall)
     let tempId = repository.getUserTempId()
-    let lat = tool.getCookie(CONSTANT.LAT)
-    let lng = tool.getCookie(CONSTANT.LNG)
+    let lat = alat || tool.getCookie(CONSTANT.LAT)
+    let lng = alng || tool.getCookie(CONSTANT.LNG)
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
     let params = {
       //4 test
-      lat: 39.904989,
-      lng: 116.405285
+      // lat: 39.904989,
+      // lng: 116.405285
       //end
-      //lat: lat,
-      //lng: lng
+      lat: lat,
+      lng: lng
     }
     if (!header.storeId) {
       //4 test
-      header['storeId'] = 230
-      header['venderId'] = 1
+      // header['storeId'] = 230
+      // header['venderId'] = 1
       //end
 
-      //header['storeId'] = storeId || tool.getCookie(CONSTANT.STOREID)
-      //header['venderId'] = vendorId || tool.getCookie(CONSTANT.VENDORID)
+      // header['storeId'] = storeId || tool.getCookie(CONSTANT.STOREID)
+      // header['venderId'] = vendorId || tool.getCookie(CONSTANT.VENDORID)
+
+      header['storeId'] = storeId || localStorage.getItem(CONSTANT.STOREID)
+      header['venderId'] = vendorId || localStorage.getItem(CONSTANT.VENDORID)
     }
     if(!header.token && !tool.isEmpty(token)) {
       header['token'] = token
