@@ -137,10 +137,10 @@ export default {
     }
   },
   ready :function(){
-    let _this = this;
+    let _this = this
     let cart = new Cart()
     this.$set('cartModel', cart)
-    cart.getCartInfo();
+    cart.getCartInfo()
     cart.on('loadcartsuccess', function (data) {
       _this.$set('cartData', data)
     })
@@ -162,6 +162,7 @@ export default {
       this.cartModel.removeCartItem(ware.sku, cart.erpStoreId)
     },
     switchCartStatus: function() {
+      this.cartModel.getCartInfo()
       this.$set('cart_display', !this.cart_display)
       this.$dispatch('cartSatus', this.cart_display)
     }
