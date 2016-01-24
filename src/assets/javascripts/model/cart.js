@@ -28,7 +28,6 @@ var Cart = Stapes.subclass({
    },
    */
   add2Cart: function(sku, count, storeId, venderId) {
-    console.log('add2Cart')
     let tempId = repository.getUserTempId()
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
@@ -64,7 +63,6 @@ var Cart = Stapes.subclass({
     if(!count) {
       return
     }
-    console.log('updateCartItem')
     let tempId = repository.getUserTempId()
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
@@ -97,8 +95,6 @@ var Cart = Stapes.subclass({
     }.bind(this))
   },
   getCartInfo: function (storeId, vendorId) {
-    console.log(dmall === dmall2)
-    console.log(dmall === dmall)
     let tempId = repository.getUserTempId()
     let lat = repository.getLatLng().lat
     let lng = repository.getLatLng().lng
@@ -129,7 +125,6 @@ var Cart = Stapes.subclass({
     }
     dmall.post('cart/cartInfo', params).then(respose).then(
       function (rs) {
-        console.log(rs)
         let cartId = rs.cartId
         if (!tool.isEmpty(cartId) && tool.isEmpty(tool.getCookie('token'))) {
           repository.setUserTempId(cartId)
@@ -144,10 +139,10 @@ var Cart = Stapes.subclass({
     }.bind(this))
   },
   extractCurrentCart: function(rs, storeId) {
-    console.log('extractCurrentCart')
     let currentCart = tool.clone(rs)
     let erpStoreId = storeId || repository.getStoreId()
-    let o = Stapes.subclass()
+    let O = Stapes.subclass()
+    let o = new O()
     o.push(rs.storeGroup || [])
     currentCart.storeGroup = []
     o.each(function(cart) {
@@ -155,7 +150,6 @@ var Cart = Stapes.subclass({
         currentCart.storeGroup.push(cart)
       }
     })
-    console.log(currentCart)
     return currentCart
   }
 })
