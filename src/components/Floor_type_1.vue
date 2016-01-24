@@ -5,7 +5,7 @@
         <p class="ware-title">{{ware.wareName }}</p>
         <p class="color-orange ware-price">￥{{ware.warePrice}}</p>
       </div>
-       <div class="uk-float-right"><a class="add-icon color-orange"></a></div>
+       <div class="uk-float-right"><a class="add-icon color-orange" v-on:click="addCart(ware)"></a></div>
   </div>
 </template>
 
@@ -45,7 +45,29 @@
 </style>
 
 <script>
-    export default {
-        props: ['wares']
+import CONSTANT from '../assets/javascripts/util/constant.js'
+import Cart from '../assets/javascripts/model/cart.js'
+
+
+export default {
+  props: ['wares'],
+  methods: {
+    addCart: function (ware) {
+    // sku, count, storeId, venderId
+      let sku = ware.sku
+      let count = 1
+      let storeId = localStorage.getItem(CONSTANT.STOREID)
+      let venderId = localStorage.getItem(CONSTANT.VENDORID)
+      let cart = new Cart()
+      cart.add2Cart(sku, count, storeId, venderId);
+
+      cart.on('addsuccess',function(data){
+        console.log('addsuccess');
+        console.log(data);
+        // _this.$set('cartData', data);
+      })
+
     }
+  }
+}
 </script>

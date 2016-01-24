@@ -155,6 +155,12 @@ export default {
       console.log(_this.cartData);
       console.log('cartVue: '+_this.cart_display);
     })
+    // cart.on('addsuccess',function(data){
+    //   console.log('addsuccess');
+    //   console.log(data);
+    //   // _this.$set('cartData', data);
+    // })
+
   },
   methods: {
     showCart: function () {

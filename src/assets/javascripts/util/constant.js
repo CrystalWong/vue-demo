@@ -6,7 +6,7 @@ let constant = {
   LNG: prefix + 'lng',
   STOREID: prefix + 'storeId',
   VENDORID: prefix + 'venderId',
-  USERTEMPID: prefix + '.userTempId'
+  USERTEMPID: prefix + 'userTempId'
 }
 
 module.exports = constant
