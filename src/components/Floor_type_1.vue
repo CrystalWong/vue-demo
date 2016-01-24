@@ -53,7 +53,7 @@ export default {
   props: ['wares'],
   methods: {
     addCart: function (ware) {
-    // sku, count, storeId, venderId
+      // sku, count, storeId, venderId
       let sku = ware.sku
       let count = 1
       let storeId = localStorage.getItem(CONSTANT.STOREID)

@@ -110,7 +110,7 @@ var Cart = Stapes.subclass({
     }
     if (!header.storeId) {
       //4 test
-      header['storeId'] = 230
+      header['storeId'] = 150
       header['venderId'] = 1
       //end
 
@@ -132,7 +132,7 @@ var Cart = Stapes.subclass({
         if(!tool.isEmpty(tool.getCookie('token'))) {
           repository.deleteUserTempId()
         }
-        this.emit('loadcartsuccess', this.extractCurrentCart(rs))
+        this.emit('loadcartsuccess', this.extractCurrentCart(rs, 150))
       }.bind(this)
     ).catch(function (err) {
       this.emit('loadcartfailure')

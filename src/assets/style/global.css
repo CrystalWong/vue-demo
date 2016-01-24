@@ -6,6 +6,14 @@ html{
 body{
 	font-size: 62.5%;
 }
+
+.bd-overflow-hidden{
+  overflow: hidden;
+}
+
+.bd-overflow-visible{
+  overflow: visible;
+}
 .position-fixed{
   position: fixed;
 }
