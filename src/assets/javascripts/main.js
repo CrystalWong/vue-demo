@@ -18,10 +18,14 @@ let uuid = url.uuid
 
 let request_url =  proxy_url + uuid
 let appVm = new Vue({
-  data:{
-    cartShow: false
-  },
   el: '#app',
+  // data() {
+  //   return {
+  //     cart_display: false,
+  //     cartData: {
+  //     }
+  //   }
+  // },
   components: {
     // TopHeader,
     Banner,
@@ -36,21 +40,23 @@ let appVm = new Vue({
   },
   ready: function() {
     this.$http.get()
-        .then(function(response) {
-          this.$set('storeData', response.data)
-        }, function(response){
-          this.$set('storeData', '系统异常')
-        })
+      .then(function(response) {
+        this.$set('storeData', response.data)
+      }, function(response){
+        this.$set('storeData', '系统异常')
+      })
   },
-  events: {
-    'displayCart': function () {
-      this.cartShow = true
-    },
-    hideCart: function() {
-      this.cartShow = false
-    }
+  // events: {
+  //   displayCart: function () {
+  //     console.log('init cart' + this.cart_display)
+  //     this.$set('cart_display', true)
+  //   },
+  //   hideCart: function() {
+  //     console.log('hi hideCart')
+  //     this.$set('cart_display', false)
+  //     console.log(this.cart_display)
+  //   }
+  // }
 
-
-  }
 })
 

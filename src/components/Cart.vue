@@ -1,10 +1,10 @@
 <template>
   <!-- <div id="one-piece_cart" > -->
      <!-- style="display:none;" -->
-    <div class="uk-animation-reverse" v-show="cart_display">
+    <div class="uk-animation-reverse" v-if="cart_display">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" v-on:click="clickCart">
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" v-on:click="hideCart">
         <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" data-value="cart_display" v-else="cart_display" @click="showCart"></div>
+    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="showCart"></div>
   <!-- </div> -->
 </template>
 <style>
@@ -145,11 +145,11 @@ export default {
       }
     }
   },
-  methods: {
-    clickCart: function () {
-      console.log('clickCart');
-    }
-  },
+  // methods: {
+  //   clickCart: function () {
+  //     console.log('clickCart');
+  //   }
+  // },
   ready :function(){
     let _this = this;
     let cart = new Cart()
@@ -159,16 +159,19 @@ export default {
       console.log(data);
       _this.$set('cartData', data);
       console.log(_this.cartData);
-      console.log(_this.cart_display);
+      console.log('cartVue: '+_this.cart_display);
     })
   },
   methods: {
     showCart: function () {
-      this.$dispatch('displayCart')
+      this.$set('cart_display', true)
+
+      // this.$dispatch('displayCart')
     },
     hideCart: function (){
-      this.$dispatch('hideCart')
-      // this.$dispatch('changeCartDisplay')
+      this.$set('cart_display', false)
+      // console.log('hideCart')
+      // this.$dispatch('hideCart')
     }
   }
 }
