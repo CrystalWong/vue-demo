@@ -5,7 +5,7 @@ let constant = {
   LAT: prefix + 'lat',
   LNG: prefix + 'lng',
   STOREID: prefix + 'storeId',
-  VENDORID: prefix + 'venderId',
+  VENDORID: prefix + 'vendorId',
   USERTEMPID: prefix + 'userTempId'
 }
 
