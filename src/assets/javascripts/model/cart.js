@@ -145,12 +145,12 @@ var Cart = Stapes.subclass({
   },
   extractCurrentCart: function(rs, storeId) {
     let currentCart = tool.clone(rs)
-    let storeId = storeId || tool.getCookie(CONSTANT.STOREID)
+    let erpStoreId = storeId || tool.getCookie(CONSTANT.STOREID)
     let o = Stapes.subclass()
     o.push(rs.storeGroup || [])
     currentCart.storeGroup = []
     o.each(function(cart) {
-      if(String(storeId) === String(cart.erpStoreId)) {
+      if(String(erpStoreId) === String(cart.erpStoreId)) {
         currentCart.storeGroup.push(cart)
       }
     })
