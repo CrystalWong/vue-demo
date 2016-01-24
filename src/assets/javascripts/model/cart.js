@@ -32,8 +32,8 @@ var Cart = Stapes.subclass({
     let tempId = repository.getUserTempId()
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
-    let erpStoreId = storeId || tool.getCookie(store_id)
-    let vendorId = venderId || tool.getCookie('vendorId') || tool.getCookie('vender_id')
+    let erpStoreId = storeId || repository.getStoreId()
+    let vendorId = venderId || repository.getVendorId() || tool.getCookie('vendorId') || tool.getCookie('vender_id')
     let params = {
       storeGroup: [{"erpStoreId": erpStoreId, "wares": [{"sku": sku, "count": count || 1, "checked": true}]}]
     }
@@ -68,8 +68,8 @@ var Cart = Stapes.subclass({
     let tempId = repository.getUserTempId()
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
-    let erpStoreId = storeId || tool.getCookie(store_id)
-    let vendorId = venderId || tool.getCookie('vendorId') || tool.getCookie('vender_id')
+    let erpStoreId = storeId || repository.getStoreId()
+    let vendorId = venderId || repository.getVendorId() || tool.getCookie('vendorId') || tool.getCookie('vender_id')
     let params = {
       storeGroup: [{"erpStoreId": erpStoreId, "wares": [{"sku": sku, "count": count || 1, "checked": true}]}]
     }
@@ -96,12 +96,12 @@ var Cart = Stapes.subclass({
       this.emit('updatefailure')
     }.bind(this))
   },
-  getCartInfo: function (storeId, vendorId, alat, alng) {
+  getCartInfo: function (storeId, vendorId) {
     console.log(dmall === dmall2)
     console.log(dmall === dmall)
     let tempId = repository.getUserTempId()
-    let lat = alat || tool.getCookie(CONSTANT.LAT)
-    let lng = alng || tool.getCookie(CONSTANT.LNG)
+    let lat = repository.getLatLng().lat
+    let lng = repository.getLatLng().lng
     let header = dmall.getHeader()
     let token = tool.getCookie('token')
     let params = {
@@ -123,6 +123,8 @@ var Cart = Stapes.subclass({
 
       header['storeId'] = storeId || localStorage.getItem(CONSTANT.STOREID)
       header['venderId'] = vendorId || localStorage.getItem(CONSTANT.VENDORID)
+      //header['storeId'] = storeId || repository.getStoreId(CONSTANT.STOREID)
+      //header['venderId'] = vendorId || repository.getVendorId(CONSTANT.VENDORID)
     }
     if(!header.token && !tool.isEmpty(token)) {
       header['token'] = token
@@ -147,8 +149,9 @@ var Cart = Stapes.subclass({
     }.bind(this))
   },
   extractCurrentCart: function(rs, storeId) {
+    console.log('extractCurrentCart')
     let currentCart = tool.clone(rs)
-    let erpStoreId = storeId || tool.getCookie(CONSTANT.STOREID)
+    let erpStoreId = storeId || repository.getStoreId()
     let o = Stapes.subclass()
     o.push(rs.storeGroup || [])
     currentCart.storeGroup = []
@@ -157,6 +160,7 @@ var Cart = Stapes.subclass({
         currentCart.storeGroup.push(cart)
       }
     })
+    console.log(currentCart)
     return currentCart
   }
 })

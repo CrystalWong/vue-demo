@@ -87,8 +87,9 @@ function clone(item) {
     i,
     j,
     k,
-    clone,
+    cloneObj,
     key;
+  var enumerables = ['hasOwnProperty', 'valueOf', 'isPrototypeOf', 'propertyIsEnumerable'];
 
   if (item === null || item === undefined) {
     return item;
@@ -112,31 +113,31 @@ function clone(item) {
   if (type === '[object Array]') {
     i = item.length;
 
-    clone = [];
+    cloneObj = [];
 
     while (i--) {
-      clone[i] = Ext.clone(item[i]);
+      cloneObj[i] = clone(item[i]);
     }
   }
   // Object
   else if (type === '[object Object]' && item.constructor === Object) {
-    clone = {};
+    cloneObj = {};
 
     for (key in item) {
-      clone[key] = Ext.clone(item[key]);
+      cloneObj[key] = clone(item[key]);
     }
 
-    if (enumerables) {
-      for (j = enumerables.length; j--;) {
-        k = enumerables[j];
-        if (item.hasOwnProperty(k)) {
-          clone[k] = item[k];
-        }
-      }
-    }
+    //if (enumerables) {
+    //  for (j = enumerables.length; j--;) {
+    //    k = enumerables[j];
+    //    if (item.hasOwnProperty(k)) {
+    //      cloneObj[k] = item[k];
+    //    }
+    //  }
+    //}
   }
 
-  return clone || item;
+  return cloneObj || item;
 }
 
 /*

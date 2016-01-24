@@ -26,6 +26,21 @@ let Repository = Stapes.subclass({
 
   deleteUserTempId: function () {
     localStorage.removeItem(CONSTANT.USERTEMPID)
+  },
+
+  getStoreId: function() {
+    return localStorage.getItem(CONSTANT.STOREID)
+  },
+
+  getVendorId: function() {
+    return localStorage.getItem(CONSTANT.VENDORID)
+  },
+
+  getLatLng: function() {
+    return {
+      lat: localStorage.getItem(CONSTANT.LAT),
+      lng: localStorage.getItem(CONSTANT.LNG)
+    }
   }
 })
 
