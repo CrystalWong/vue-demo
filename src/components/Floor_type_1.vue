@@ -64,7 +64,6 @@ export default {
       cart.on('addsuccess',function(data){
         console.log('addsuccess')
         console.log(data);
-        cart.getCartInfo()
         // _this.$set('cartData', data);
       })
 

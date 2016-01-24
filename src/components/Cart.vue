@@ -1,8 +1,10 @@
 <template>
-    <div v-bind:class="{ 'cart-show': cartShow, 'cart-hide': cartHide}" v-if="cart_display" style="position: fixed;width: 100%;height: 100%;top: 0;">
+  <!-- <div id="one-piece_cart" > -->
+     <!-- style="display:none;" -->
+    <div class="uk-animation-reverse" v-if="cart_display">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list cart-effect" v-on:click="hideCart">
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list">
         <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <div v-for="cart in cartData.storeGroup">
@@ -12,10 +14,10 @@
                 <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">{{ ware.name }}</span>
                 <span class="uk-display-inline-block color-orange uk-text-top">{{ ware.promotionPrice/100 | currency '￥'}}</span>
                 <div class="uk-float-right">
-                  <a class="ware-del small-icon-size uk-text-middle" href=""></a>
-                  <a class="ware-reduce small-icon-size uk-text-middle" href=""></a>
+                  <span v-if="1 == ware.count" class="ware-del small-icon-size uk-text-middle" v-on:click="trashWare(ware, cart, $event)"></span>
+                  <span v-if="ware.count > 1" class="ware-reduce small-icon-size uk-text-middle" v-on:click="reduceWare(ware, cart, $event)"></span>
                   <span class="ware-count">{{ ware.count }}</span>
-                  <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+                  <span class="ware-add small-icon-size uk-text-middle" v-on:click="addWare(ware, cart, $event)"></span>
                 </div>
               </li>
             </ul>
@@ -30,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="showCart"></div>
+    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="switchCartStatus"></div>
   <!-- </div> -->
 </template>
 <style>
@@ -51,10 +53,9 @@
   .wrap-cart-list{
 /*    top: 100%;
     margin-top: -120px;*/
-    transform:translateY(100%);
   }
   .cart-list{
-    margin:0 auto;;
+    margin:0 auto;
     max-height: 200px;
     overflow-y: scroll;
   }
@@ -99,21 +100,12 @@
     /*height: 100%;*/
     top: 0;
   }
-  .cart-show .cart-effect{
-    animation: upShow linear .5s both;
-    -webkit-animation: upShow linear .5s both;
-  }
-  .cart-hide .cart-effect{
-   animation: downHide linear .5s both;
-   -webkit-animation: downHide linear .5s both;
-  }
+/*  .upShow{
 
+  }
   @keyframes upShow{
     0%{opacity:0;-webkit-transform:translateY(100%)}100%{opacity:1;-webkit-transform:translateY(0)}
-  }
-  @keyframes downHide{
-    0%{opacity:1;-webkit-transform:translateY(0)}100%{opacity:0;-webkit-transform:translateY(100%)}
-  }
+  }*/
 
 </style>
 <script>
@@ -140,44 +132,39 @@ export default {
       cart_display: false,
       cartData: {
         storeGroup: []
-      }
+      },
+      cartModel: {}
     }
   },
   ready :function(){
     let _this = this;
     let cart = new Cart()
-    cart.getCartInfo()
-    cart.on('loadcartsuccess',function(data){
-      _this.$set('cartData', data)
-      console.log(_this.cartData)
-      console.log(_this.cartData.storeGroup)
-      console.log(_this.cartData.storeGroup[0].typeGroup)
-      console.log('cartVue: '+_this.cart_display)
-    })
-    // cart.on('addsuccess',function(data){
-    //   console.log('addsuccess');
-    //   console.log(data);
-    //   // _this.$set('cartData', data);
-    // })
 
+    this.$set('cartModel', cart)
+    cart.getCartInfo();
+    cart.on('loadcartsuccess', function (data) {
+      _this.$set('cartData', data)
+    })
+    cart.on('updatesuccess', function (data) {
+      this.$set('cartData', data)
+    }.bind(this))
+    cart.on('removesuccess', function (data) {
+      this.$set('cartData', data)
+    }.bind(this))
   },
   methods: {
-    showCart: function () {
-      this.$set('cart_display', true);
-      this.$set('cartShow', true);
-      this.$set('cartHide', false);
-      this.$dispatch('hideOverflow')
-      // $("body").css("overflow","hidden");
+    addWare: function (ware, cart, event) {
+      this.cartModel.updateCartItem(ware.sku, ware.count + 1, cart.erpStoreId)
     },
-    hideCart: function (){
-      setTimeout(function(){
-        this.$set('cart_display', false);
-      }.bind(this),500);
-      this.$set('cartHide', true);
-      this.$set('cartShow', false);
-      // this.$dispatch('hideCart')
-      // $("body").css("overflow","visible");
-      this.$dispatch('showOverflow')
+    reduceWare: function (ware, cart, event) {
+      this.cartModel.updateCartItem(ware.sku, ware.count - 1, cart.erpStoreId)
+    },
+    trashWare: function (ware, cart, event) {
+      this.cartModel.removeCartItem(ware.sku, cart.erpStoreId)
+    },
+    switchCartStatus: function() {
+      this.$set('cart_display', !this.cart_display)
+      this.$dispatch('cartSatus', this.cart_display)
     }
   }
 }
