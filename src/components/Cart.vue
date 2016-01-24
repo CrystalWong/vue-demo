@@ -116,9 +116,9 @@
 
 </style>
 <script>
-import redirectServer from '../assets/javascripts/config/config.js'
+// import redirectServer from '../assets/javascripts/config/config.js'
 import Cart from '../assets/javascripts/model/cart.js'
-console.log(redirectServer)
+// console.log(redirectServer)
 console.log(Cart)
 
 // let cartData;
@@ -128,28 +128,22 @@ console.log(Cart)
 // cart.on('loadcartsuccess', function(data){
 //   cartData = data
 // })
- class Polygon {
+class Polygon {
   constructor(height, width) {
     this.height = height;
     this.width = width;
   }
- }
- let poly = new Polygon(2,3)
- console.log(poly.height);
+}
+let poly = new Polygon(2,3)
+console.log(poly.height);
 export default {
-  el: '#one-piece_cart',
   data() {
     return {
-      cart_display: true,
+      cart_display: false,
       cartData: {
       }
     }
   },
-  // methods: {
-  //   clickCart: function () {
-  //     console.log('clickCart');
-  //   }
-  // },
   ready :function(){
     let _this = this;
     let cart = new Cart()
@@ -165,12 +159,10 @@ export default {
   methods: {
     showCart: function () {
       this.$set('cart_display', true)
-
       // this.$dispatch('displayCart')
     },
     hideCart: function (){
       this.$set('cart_display', false)
-      // console.log('hideCart')
       // this.$dispatch('hideCart')
     }
   }

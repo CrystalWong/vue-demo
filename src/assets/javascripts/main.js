@@ -8,6 +8,11 @@ import Promotion from './../../components/Promotion.vue'
 import Floor1 from './../../components/Floor_type_1.vue'
 import Cart from './../../components/Cart.vue'
 import Loading from './../../components/Loading.vue'
+// import repository from './util/repository.js'
+import CONSTANT from './util/constant.js'
+// import tool from './util/tool.js'
+
+
 
 /* eslint-disable */
 Vue.use(VueResource)
@@ -19,13 +24,6 @@ let uuid = url.uuid
 let request_url =  proxy_url + uuid
 let appVm = new Vue({
   el: '#app',
-  // data() {
-  //   return {
-  //     cart_display: false,
-  //     cartData: {
-  //     }
-  //   }
-  // },
   components: {
     // TopHeader,
     Banner,
@@ -41,6 +39,10 @@ let appVm = new Vue({
   ready: function() {
     this.$http.get()
       .then(function(response) {
+        localStorage.setItem(CONSTANT.VENDORID, response.data.verdor_id)
+        localStorage.setItem(CONSTANT.STOREID, response.data.d_store_id)
+        localStorage.setItem(CONSTANT.LNG, response.data.lng)
+        localStorage.setItem(CONSTANT.LAT, response.data.lat)
         this.$set('storeData', response.data)
       }, function(response){
         this.$set('storeData', '系统异常')
