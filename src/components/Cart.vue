@@ -4,8 +4,8 @@
     <div class="uk-animation-reverse" v-show="cart_display">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" @click="hideCart">
-        <div class="cart-icon cart-list-icon-position margin-top-reverse-25" data-value="cart_display"></div>
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" v-on:click="clickCart">
+        <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <ul class="cart-list uk-list uk-list-line uk-width-9-10">
           <li class="ware-item-padding">
@@ -127,16 +127,39 @@ console.log(Cart)
 // cart.getCartInfo()
 // cart.on('loadcartsuccess', function(data){
 //   cartData = data
-
 // })
+ class Polygon {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+ }
+ let poly = new Polygon(2,3)
+ console.log(poly.height);
 export default {
-  props:['cart_display'],
+  el: '#one-piece_cart',
+  data() {
+    return {
+      cart_display: true,
+      cartData: {
+      }
+    }
+  },
+  methods: {
+    clickCart: function () {
+      console.log('clickCart');
+    }
+  },
   ready :function(){
     let _this = this;
     let cart = new Cart()
     cart.getCartInfo();
+    console.log(_this);
     cart.on('loadcartsuccess',function(data){
-      _this.$set('cartData', data)
+      console.log(data);
+      _this.$set('cartData', data);
+      console.log(_this.cartData);
+      console.log(_this.cart_display);
     })
   },
   methods: {

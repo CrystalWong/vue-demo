@@ -82,6 +82,63 @@ function apply (object, config) {
   return object
 }
 
+function clone(item) {
+  var type,
+    i,
+    j,
+    k,
+    clone,
+    key;
+
+  if (item === null || item === undefined) {
+    return item;
+  }
+
+  // DOM nodes
+  // recursively
+  if (item.nodeType && item.cloneNode) {
+    return item.cloneNode(true);
+  }
+
+  type = toString.call(item);
+
+  // Date
+  if (type === '[object Date]') {
+    return new Date(item.getTime());
+  }
+
+
+  // Array
+  if (type === '[object Array]') {
+    i = item.length;
+
+    clone = [];
+
+    while (i--) {
+      clone[i] = Ext.clone(item[i]);
+    }
+  }
+  // Object
+  else if (type === '[object Object]' && item.constructor === Object) {
+    clone = {};
+
+    for (key in item) {
+      clone[key] = Ext.clone(item[key]);
+    }
+
+    if (enumerables) {
+      for (j = enumerables.length; j--;) {
+        k = enumerables[j];
+        if (item.hasOwnProperty(k)) {
+          clone[k] = item[k];
+        }
+      }
+    }
+  }
+
+  return clone || item;
+}
+
 /*
  * Set cookie value
  */
@@ -133,6 +190,7 @@ module.exports = {
   isEmpty: isEmpty,
   isObjectEmpty: isObjectEmpty,
   apply: apply,
+  clone: clone,
   setCookie: setCookie,
   getCookie: getCookie,
   getHostName: getHostName
