@@ -7,35 +7,28 @@
       <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list" v-on:click="hideCart">
         <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
-        <ul class="cart-list uk-list uk-list-line uk-width-9-10">
-          <li class="ware-item-padding">
-            <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">中绿生态蒜苗</span>
-            <span class="uk-display-inline-block color-orange uk-text-top">￥11.00</span>
-            <div class="uk-float-right">
-              <a class="ware-del small-icon-size uk-text-middle" href=""></a>
-              <!-- uk-margin-small-left uk-margin-small-right -->
-              <span class="ware-count">00</span>
-              <a class="ware-add small-icon-size uk-text-middle" href=""></a>
-            </div>
-          </li>
+        <div v-for="cart in cartData.storeGroup">
+          <div v-for="typeGroup in cart.typeGroup">
+            <ul v-for="promotionGroup in typeGroup.promotionGroup" class="cart-list uk-list uk-list-line uk-width-9-10">
+              <li v-for="ware in promotionGroup.wares" class="ware-item-padding">
+                <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">{{ ware.name }}</span>
+                <span class="uk-display-inline-block color-orange uk-text-top">{{ ware.promotionPrice/100 | currency '￥'}}</span>
+                <div class="uk-float-right">
+                  <a class="ware-del small-icon-size uk-text-middle" href=""></a>
+                  <span class="ware-count">{{ ware.count }}</span>
+                  <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+                </div>
+              </li>
 
-          <li class="ware-item-padding">
-            <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">中绿生态蒜苗</span>
-            <span class="uk-display-inline-block color-orange uk-text-top">￥11.00</span>
-            <div class="uk-float-right">
-              <a class="ware-del small-icon-size uk-text-middle" href=""></a>
-              <span class="ware-count">00</span>
-              <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+            </ul>
+            <div class="uk-grid">
+              <div class="bg-grey uk-width-8-10 uk-text-right wrap-check">
+                <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">{{ typeGroup.bizTypeDiscountPrice/100 | currency '￥'}}</p>
+                <p class="uk-margin-remove color-grey">总额: {{ typeGroup.bizTypeOriginalPrice/100 | currency '￥' }}  优惠: {{ typeGroup.bizTypeDiscountAmount/100 | currency '￥' }}</p>
+              </div>
+              <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="" >结算</a>
             </div>
-          </li>
-
-        </ul>
-        <div class="uk-grid">
-          <div class="bg-grey uk-width-8-10 uk-text-right wrap-check">
-            <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">￥11.00</p>
-            <p class="uk-margin-remove color-grey">另需配送费7元</p>
           </div>
-          <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="" >结算</a>
         </div>
       </div>
     </div>
@@ -117,10 +110,7 @@
 </style>
 <script>
 // import redirectServer from '../assets/javascripts/config/config.js'
-import CONSTANT from '../assets/javascripts/util/constant.js'
 import Cart from '../assets/javascripts/model/cart.js'
-// console.log(redirectServer)
-console.log(Cart)
 
 // let cartData;
 
@@ -136,32 +126,32 @@ class Polygon {
   }
 }
 let poly = new Polygon(2,3)
-console.log(poly.height);
 export default {
   data() {
     return {
       cart_display: false,
       cartData: {
+        storeGroup: []
       }
     }
   },
   ready :function(){
     let _this = this;
-    let storeId = localStorage.getItem(CONSTANT.STOREID)
-    let venderId = localStorage.getItem(CONSTANT.VENDORID)
-    let lat = localStorage.getItem(CONSTANT.LAT)
-    let lng = localStorage.getItem(CONSTANT.LNG)
-
     let cart = new Cart()
-    cart.getCartInfo(storeId, venderId, lat, lng);
-
-    console.log(_this);
+    cart.getCartInfo();
     cart.on('loadcartsuccess',function(data){
-      console.log(data);
-      _this.$set('cartData', data);
-      console.log(_this.cartData);
+      _this.$set('cartData', data)
+      console.log(_this.cartData)
+      console.log(_this.cartData.storeGroup)
+      console.log(_this.cartData.storeGroup[0].typeGroup)
       console.log('cartVue: '+_this.cart_display);
     })
+    // cart.on('addsuccess',function(data){
+    //   console.log('addsuccess');
+    //   console.log(data);
+    //   // _this.$set('cartData', data);
+    // })
+
   },
   methods: {
     showCart: function () {
