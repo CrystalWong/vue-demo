@@ -62,8 +62,9 @@ export default {
       cart.add2Cart(sku, count, storeId, venderId);
 
       cart.on('addsuccess',function(data){
-        console.log('addsuccess');
+        console.log('addsuccess')
         console.log(data);
+        cart.getCartInfo()
         // _this.$set('cartData', data);
       })
 

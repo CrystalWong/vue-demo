@@ -138,13 +138,13 @@ export default {
   ready :function(){
     let _this = this;
     let cart = new Cart()
-    cart.getCartInfo();
+    cart.getCartInfo()
     cart.on('loadcartsuccess',function(data){
       _this.$set('cartData', data)
       console.log(_this.cartData)
       console.log(_this.cartData.storeGroup)
       console.log(_this.cartData.storeGroup[0].typeGroup)
-      console.log('cartVue: '+_this.cart_display);
+      console.log('cartVue: '+_this.cart_display)
     })
     // cart.on('addsuccess',function(data){
     //   console.log('addsuccess');

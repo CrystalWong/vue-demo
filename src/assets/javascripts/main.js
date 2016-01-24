@@ -55,14 +55,10 @@ let appVm = new Vue({
   },
   events: {
     hideOverflow: function () {
-      console.log('hideOverflow')
       this.$set('overflowVisible', false)
       this.$set('overflowHiden', true)
-      console.log('overflowHiden: ' + this.overflowHiden)
-      console.log('overflowVisible: ' + this.overflowVisible)
     },
     showOverflow: function() {
-      console.log('showOverflow')
       this.$set('overflowVisible', true)
       this.$set('overflowHiden', false)
 
