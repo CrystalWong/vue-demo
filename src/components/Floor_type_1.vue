@@ -3,7 +3,7 @@
       <img :src="ware.wareImg" class="uk-responsive-height ware-img"/>
       <div class="uk-position-absolute wrap-ware">
         <p class="ware-title">{{ware.wareName }}</p>
-        <p class="color-orange ware-price">￥{{ware.warePrice}}</p>
+        <p class="color-orange ware-price">{{ware.warePrice/100 | currency '￥'}}</p>
       </div>
        <div class="uk-float-right"><a class="add-icon color-orange" v-on:click="addCart(ware)"></a></div>
   </div>
@@ -65,7 +65,7 @@ export default {
         console.log('addsuccess')
         console.log(UIkit)
         UIkit.notify({
-            message: '感谢您购买',
+            message: '加入购物车成功',
             status: 'success',
             timeout: 2000,
             pos: 'bottom-center'

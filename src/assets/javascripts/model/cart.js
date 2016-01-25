@@ -134,20 +134,20 @@ var Cart = Stapes.subclass({
     let token = tool.getCookie('token')
     let params = {
       //4 test
-      lat: 39.904989,
-      lng: 116.405285
+      // lat: 39.904989,
+      // lng: 116.405285
       //end
-      //lat: lat,
-      //lng: lng
+      lat: lat,
+      lng: lng
     }
     if (!header.storeId) {
       //4 test
-      header['storeId'] = 150
-      header['venderId'] = 1
+      // header['storeId'] = 150
+      // header['venderId'] = 1
       //end
 
-      //header['storeId'] = storeId || repository.getStoreId(CONSTANT.STOREID)
-      //header['venderId'] = vendorId || repository.getVendorId(CONSTANT.VENDORID)
+      header['storeId'] = storeId || repository.getStoreId(CONSTANT.STOREID)
+      header['venderId'] = vendorId || repository.getVendorId(CONSTANT.VENDORID)
     }
     if(!header.token && !tool.isEmpty(token)) {
       header['token'] = token

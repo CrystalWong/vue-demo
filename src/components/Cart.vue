@@ -33,11 +33,16 @@
       </div>
     </div>
     <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="switchCartStatus"></div>
+<!--         <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="switchCartStatus"></div>
+ -->
   <!-- </div> -->
 </template>
 <style>
   .cart-icon{
     background-image: url(../assets/images/cart.png);
+  }
+  .cart-empty-icon{
+    background-image: url(../assets/images/cart_empty.png);
   }
   .cart-icon-size{
     background-size:50px 50px;
@@ -123,9 +128,11 @@
 
 </style>
 <script>
-// import redirectServer from '../assets/javascripts/config/config.js'
+import redirectServer from '../assets/javascripts/config/config.js'
 import Cart from '../assets/javascripts/model/cart.js'
 import CONSTANT from '../assets/javascripts/util/constant.js'
+import tool from '../assets/javascripts/util/tool.js'
+
 
 // let cartData;
 
@@ -205,10 +212,20 @@ export default {
       let areadId = localStorage.getItem(CONSTANT.AREADID)
       let communityName = localStorage.getItem(CONSTANT.COMMUNITYNAME)
 
-      //&fromOnePiece=true&consigneeName=武松&mobilPhone=18712341234&areadId=100011&communityName=警察局&lat=39.904989&lng=116.405285
-      // let url = "http://bjm.test.dmall.com:8003/checkout.html?storeId="+erpStoreId+"&vendorId="+venderId+"&salesType="+groupType+"&fromOnePiece="+fromOnePiece+"&lat="+lat+"&lng="+lng+"&areadId="+areadId+"&communityName="+communityName;
+      // &fromOnePiece=true&consigneeName=武松&mobilPhone=18712341234&areadId=100011&communityName=警察局&lat=39.904989&lng=116.405285
+      // let url =redirectServer.locationCheckout +"?storeId="+erpStoreId+"&vendorId="+venderId+"&salesType="+groupType+"&fromOnePiece="+fromOnePiece+"&lat="+lat+"&lng="+lng+"&areadId="+areadId+"&communityName="+communityName;
       // console.log(url)
-      window.location.href = "http://m.pre.dmall.com/checkout.html?storeId="+erpStoreId+"&vendorId="+venderId+"&salesType="+groupType+"&fromOnePiece="+fromOnePiece+"&lat="+lat+"&lng="+lng+"&areadId="+areadId+"&communityName="+communityName;
+      // "http://m.pre.dmall.com/checkout.html"
+      let token = tool.getCookie('token')
+      if(tool.isEmpty(tool.getCookie('token'))) {
+        // console.log(redirectServer.locationLogin)
+        let uuid = url.uuid
+        let pp = redirectServer.locationLogin+"?returnUrl=http://one.test.dmall.com?uuid="+uuid
+        window.location.href = redirectServer.locationLogin+"?returnUrl=http://one.test.dmall.com?uuid="+uuid
+        return
+      }
+
+      window.location.href = redirectServer.locationCheckout +"?storeId="+erpStoreId+"&vendorId="+venderId+"&salesType="+groupType+"&fromOnePiece="+fromOnePiece+"&lat="+lat+"&lng="+lng+"&areadId="+areadId+"&communityName="+communityName;
     }
   }
 }
