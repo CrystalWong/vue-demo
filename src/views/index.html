@@ -17,7 +17,7 @@
     <div id="app-back" class="uk-height-viewport">
       <div v-show="storeData.result==1">
         <!-- <top-header :h-title="storeData.name"></top-header> -->
-        <banner :imageurl="storeData.store_image_url"></banner>
+        <banner :storedata="storeData"></banner>
         <floor1 :wares="storeData.wares"></floor1>
         <cart :cart_display="cartShow"></cart>
       </div>
