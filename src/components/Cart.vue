@@ -1,9 +1,11 @@
 <template>
+  <!-- <div id="one-piece_cart" > -->
+     <!-- style="display:none;" -->
     <div v-bind:class="{ 'cart-show': cartShow, 'cart-hide': cartHide}" v-if="cart_display" style="position: fixed;width: 100%;height: 100%;top: 0;">
       <div class="mask uk-height-1-1"></div>
 
-      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list cart-effect" v-on:click="hideCart">
-        <div class="cart-icon cart-list-icon-position margin-top-reverse-25"></div>
+      <div class="uk-position-bottom uk-width-1-1 bg-white wrap-cart-list cart-effect">
+        <div class="cart-icon cart-list-icon-position margin-top-reverse-25" v-on:click="switchCartStatus"></div>
         <!-- <img src="../assets/images/cart_empty.png"> -->
         <div v-for="cart in cartData.storeGroup">
           <div v-for="typeGroup in cart.typeGroup">
@@ -12,10 +14,10 @@
                 <span class="uk-display-inline-block uk-width-1-2 uk-text-truncate">{{ ware.name }}</span>
                 <span class="uk-display-inline-block color-orange uk-text-top">{{ ware.promotionPrice/100 | currency '￥'}}</span>
                 <div class="uk-float-right">
-                  <a class="ware-del small-icon-size uk-text-middle" href=""></a>
-                  <a class="ware-reduce small-icon-size uk-text-middle" href=""></a>
+                  <span v-if="1 == ware.count" class="ware-del small-icon-size uk-text-middle" v-on:click="trashWare(ware, cart, $event)"></span>
+                  <span v-if="ware.count > 1" class="ware-reduce small-icon-size uk-text-middle" v-on:click="reduceWare(ware, cart, $event)"></span>
                   <span class="ware-count">{{ ware.count }}</span>
-                  <a class="ware-add small-icon-size uk-text-middle" href=""></a>
+                  <span class="ware-add small-icon-size uk-text-middle" v-on:click="addWare(ware, cart, $event)"></span>
                 </div>
               </li>
             </ul>
@@ -24,18 +26,23 @@
                 <p class="uk-margin-remove color-orange uk-text-bold uk-text-large">{{ typeGroup.bizTypeDiscountPrice/100 | currency '￥'}}</p>
                 <p class="uk-margin-remove color-grey">总额: {{ typeGroup.bizTypeOriginalPrice/100 | currency '￥' }}  优惠: {{ typeGroup.bizTypeDiscountAmount/100 | currency '￥' }}</p>
               </div>
-              <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" href="" >结算</a>
+              <a class="bg-orange color-white uk-width-2-10 uk-text-center uk-text-large btn-check" v-on:click="goCheckout()">结算</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="showCart"></div>
+    <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="switchCartStatus"></div>
+<!--         <div class="cart-icon cart-icon-size position-fixed" style="bottom: 20px;right: 0;" v-else="cart_display" v-on:click="switchCartStatus"></div>
+ -->
   <!-- </div> -->
 </template>
 <style>
   .cart-icon{
     background-image: url(../assets/images/cart.png);
+  }
+  .cart-empty-icon{
+    background-image: url(../assets/images/cart_empty.png);
   }
   .cart-icon-size{
     background-size:50px 50px;
@@ -51,10 +58,9 @@
   .wrap-cart-list{
 /*    top: 100%;
     margin-top: -120px;*/
-    transform:translateY(100%);
   }
   .cart-list{
-    margin:0 auto;;
+    margin:0 auto;
     max-height: 200px;
     overflow-y: scroll;
   }
@@ -113,12 +119,20 @@
   }
   @keyframes downHide{
     0%{opacity:1;-webkit-transform:translateY(0)}100%{opacity:0;-webkit-transform:translateY(100%)}
+  }/*  .upShow{
+
   }
+  @keyframes upShow{
+    0%{opacity:0;-webkit-transform:translateY(100%)}100%{opacity:1;-webkit-transform:translateY(0)}
+  }*/
 
 </style>
 <script>
-// import redirectServer from '../assets/javascripts/config/config.js'
+import redirectServer from '../assets/javascripts/config/config.js'
 import Cart from '../assets/javascripts/model/cart.js'
+import CONSTANT from '../assets/javascripts/util/constant.js'
+import tool from '../assets/javascripts/util/tool.js'
+
 
 // let cartData;
 
@@ -140,44 +154,78 @@ export default {
       cart_display: false,
       cartData: {
         storeGroup: []
-      }
+      },
+      cartModel: {}
     }
   },
   ready :function(){
-    let _this = this;
+    let _this = this
     let cart = new Cart()
-    cart.getCartInfo();
-    cart.on('loadcartsuccess',function(data){
-      _this.$set('cartData', data)
-      console.log(_this.cartData)
-      console.log(_this.cartData.storeGroup)
-      console.log(_this.cartData.storeGroup[0].typeGroup)
-      console.log('cartVue: '+_this.cart_display);
-    })
-    // cart.on('addsuccess',function(data){
-    //   console.log('addsuccess');
-    //   console.log(data);
-    //   // _this.$set('cartData', data);
-    // })
 
+    this.$set('cartModel', cart)
+    cart.getCartInfo()
+    cart.on('loadcartsuccess', function (data) {
+      _this.$set('cartData', data)
+    })
+    cart.on('updatesuccess', function (data) {
+      this.$set('cartData', data)
+    }.bind(this))
+    cart.on('removesuccess', function (data) {
+      this.$set('cartData', data)
+    }.bind(this))
   },
   methods: {
-    showCart: function () {
-      this.$set('cart_display', true);
-      this.$set('cartShow', true);
-      this.$set('cartHide', false);
-      this.$dispatch('hideOverflow')
-      // $("body").css("overflow","hidden");
+    addWare: function (ware, cart, event) {
+      this.cartModel.updateCartItem(ware.sku, ware.count + 1, cart.erpStoreId)
     },
-    hideCart: function (){
-      setTimeout(function(){
-        this.$set('cart_display', false);
-      }.bind(this),500);
-      this.$set('cartHide', true);
-      this.$set('cartShow', false);
-      // this.$dispatch('hideCart')
-      // $("body").css("overflow","visible");
-      this.$dispatch('showOverflow')
+    reduceWare: function (ware, cart, event) {
+      this.cartModel.updateCartItem(ware.sku, ware.count - 1, cart.erpStoreId)
+    },
+    trashWare: function (ware, cart, event) {
+      this.cartModel.removeCartItem(ware.sku, cart.erpStoreId)
+    },
+    switchCartStatus: function() {
+      this.cartModel.getCartInfo()
+      if (this.cart_display == true){
+        setTimeout(function(){
+          this.$set('cart_display', false);
+        }.bind(this),500);
+        this.$set('cartHide', true);
+        this.$set('cartShow', false);
+        this.$dispatch('showOverflow')
+      }else{
+        this.$set('cart_display', true);
+        this.$set('cartHide', false);
+        this.$set('cartShow', true);
+        this.$dispatch('hideOverflow')
+      }
+      // this.$set('cart_display', !this.cart_display)
+      this.$dispatch('cartSatus', this.cart_display)
+    },
+    goCheckout: function(){
+      let groupType = 1
+      let fromOnePiece = true
+      let erpStoreId = localStorage.getItem(CONSTANT.STOREID)
+      let venderId = localStorage.getItem(CONSTANT.VENDORID)
+      let lat = localStorage.getItem(CONSTANT.LAT)
+      let lng = localStorage.getItem(CONSTANT.LNG)
+      let areadId = localStorage.getItem(CONSTANT.AREADID)
+      let communityName = localStorage.getItem(CONSTANT.COMMUNITYNAME)
+
+      // &fromOnePiece=true&consigneeName=武松&mobilPhone=18712341234&areadId=100011&communityName=警察局&lat=39.904989&lng=116.405285
+      // let url =redirectServer.locationCheckout +"?storeId="+erpStoreId+"&vendorId="+venderId+"&salesType="+groupType+"&fromOnePiece="+fromOnePiece+"&lat="+lat+"&lng="+lng+"&areadId="+areadId+"&communityName="+communityName;
+      // console.log(url)
+      // "http://m.pre.dmall.com/checkout.html"
+      let token = tool.getCookie('token')
+      if(tool.isEmpty(tool.getCookie('token'))) {
+        // console.log(redirectServer.locationLogin)
+        let uuid = url.uuid
+        let pp = redirectServer.locationLogin+"?returnUrl=http://one.test.dmall.com?uuid="+uuid
+        window.location.href = redirectServer.locationLogin+"?returnUrl=http://one.test.dmall.com?uuid="+uuid
+        return
+      }
+
+      window.location.href = redirectServer.locationCheckout +"?storeId="+erpStoreId+"&vendorId="+venderId+"&salesType="+groupType+"&fromOnePiece="+fromOnePiece+"&lat="+lat+"&lng="+lng+"&areadId="+areadId+"&communityName="+communityName;
     }
   }
 }

@@ -3,7 +3,7 @@
       <img :src="ware.wareImg" class="uk-responsive-height ware-img"/>
       <div class="uk-position-absolute wrap-ware">
         <p class="ware-title">{{ware.wareName }}</p>
-        <p class="color-orange ware-price">￥{{ware.warePrice}}</p>
+        <p class="color-orange ware-price">{{ware.warePrice/100 | currency '￥'}}</p>
       </div>
        <div class="uk-float-right"><a class="add-icon color-orange" v-on:click="addCart(ware, $event)"></a></div>
   </div>
@@ -103,7 +103,15 @@ export default {
       cart.add2Cart(sku, count, storeId, venderId);
 
       cart.on('addsuccess',function(data){
-        console.log('addsuccess');
+        console.log('addsuccess')
+        console.log(UIkit)
+        UIkit.notify({
+            message: '加入购物车成功',
+            status: 'success',
+            timeout: 2000,
+            pos: 'bottom-center'
+        });
+
         console.log(data);
         var yValue = event.clientY - event.layerY;
         this.initCanvas(ware.wareImg,yValue);

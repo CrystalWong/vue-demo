@@ -1,9 +1,9 @@
 <template>
  <div>
  <!-- style="max-width:465px" -->
-  <div class="uk-position-absolute uk-width-1-2 uk-text-center top-10 address">大山子酒店</div>
+  <div class="uk-position-absolute uk-width-1-2 uk-text-center top-10 address">{{storedata.name}}</div>
   <div>
-  	<img :src="imageurl">
+  	<img :src="storedata.store_image_url">
   </div>
  </div>
 </template>
@@ -19,6 +19,6 @@
 </style>
 <script>
 export default {
-    props:['imageurl']
+    props:['storedata']
 }
 </script>

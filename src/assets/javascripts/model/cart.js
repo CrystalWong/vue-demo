@@ -53,7 +53,7 @@ var Cart = Stapes.subclass({
         if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
           repository.setUserTempId(rs.cartId)
         }
-        this.emit('addsuccess', rs)
+        this.emit('addsuccess', this.extractCurrentCart(rs, 150))
       }.bind(this)
     ).catch(function (err) {
       this.emit('addfailure')
@@ -88,10 +88,42 @@ var Cart = Stapes.subclass({
         if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
           repository.setUserTempId(rs.cartId)
         }
-        this.emit('updatesuccess', rs)
+        this.emit('updatesuccess', this.extractCurrentCart(rs, 150))
       }.bind(this)
     ).catch(function (err) {
       this.emit('updatefailure')
+    }.bind(this))
+  },
+  removeCartItem: function(sku, storeId, venderId) {
+    let tempId = repository.getUserTempId()
+    let header = dmall.getHeader()
+    let token = tool.getCookie('token')
+    let erpStoreId = storeId || repository.getStoreId()
+    let vendorId = venderId || repository.getVendorId() || tool.getCookie('vendorId') || tool.getCookie('vender_id')
+    let params = {
+      storeGroup: [{"erpStoreId": erpStoreId, "wares": [{"sku": sku}]}]
+    }
+    if(!tool.isEmpty(storeId)) {
+      header['storeId'] = storeId
+    }
+    if(!tool.isEmpty(vendorId)) {
+      header['venderId'] = venderId
+    }
+    if(!tool.isEmpty(token)) {
+      header['token'] = token
+    }
+    if (!tool.isEmpty(tempId)) {
+      params['tempId'] = tempId
+    }
+    dmall.post('cart/removeCartItem', params).then(respose).then(
+      function (rs) {
+        if(tool.isEmpty(tool.getCookie('token')) && !tool.isEmpty(rs.cartId)) {
+          repository.setUserTempId(rs.cartId)
+        }
+        this.emit('removesuccess', this.extractCurrentCart(rs, 150))
+      }.bind(this)
+    ).catch(function (err) {
+      this.emit('removefailure')
     }.bind(this))
   },
   getCartInfo: function (storeId, vendorId) {
@@ -102,20 +134,20 @@ var Cart = Stapes.subclass({
     let token = tool.getCookie('token')
     let params = {
       //4 test
-      lat: 39.904989,
-      lng: 116.405285
+      // lat: 39.904989,
+      // lng: 116.405285
       //end
-      //lat: lat,
-      //lng: lng
+      lat: lat,
+      lng: lng
     }
     if (!header.storeId) {
       //4 test
-      header['storeId'] = 150
-      header['venderId'] = 1
+      // header['storeId'] = 150
+      // header['venderId'] = 1
       //end
 
-      //header['storeId'] = storeId || repository.getStoreId(CONSTANT.STOREID)
-      //header['venderId'] = vendorId || repository.getVendorId(CONSTANT.VENDORID)
+      header['storeId'] = storeId || repository.getStoreId(CONSTANT.STOREID)
+      header['venderId'] = vendorId || repository.getVendorId(CONSTANT.VENDORID)
     }
     if(!header.token && !tool.isEmpty(token)) {
       header['token'] = token
